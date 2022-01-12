@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -57,38 +58,66 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(color: Color(0X8AFFFFFF), fontSize: 16),
             ),
             Container(
-              margin: const EdgeInsets.only(top: (200)),
+              margin: const EdgeInsets.only(top: (150)),
               child: SizedBox(
                 height: 60,
                 width: 250,
                 child: ElevatedButton(
-                  style: style,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white)),
                   onPressed: () {},
                   child: const Text(
                     'Sign Up',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Color(0XFFE62F16)),
                   ),
                 ),
               ),
             ),
-            const Text('Already have a Path account?',
-            style: TextStyle(color: Color(0X8AFFFFFF), fontSize: 16)
-            ),
+            Container(
+                margin: const EdgeInsets.only(top: (20)),
+                child: const Text('Already have a Path account?',
+                    style: TextStyle(color: Color(0X8AFFFFFF), fontSize: 16))),
             Container(
               margin: const EdgeInsets.only(top: (10)),
               child: SizedBox(
                 height: 60,
                 width: 250,
                 child: ElevatedButton(
-                  style: style,
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(const Color(0XFFE62F16))),  //ElevatedButton.styleFrom(shadowColor: ele),
                   onPressed: () {},
                   child: const Text(
                     'Log In',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
+                      color: Color(0X8AFFFFFF)
+                    ),
                   ),
                 ),
               ),
             ),
+            Container(
+                margin: const EdgeInsets.only(top: (20)),
+                child: const Text('By using Path, you agree to Paths',
+                    style: TextStyle(color: Color(0X8AFFFFFF), fontSize: 16))),
+            Container(
+              child: Center(
+                child: RichText(
+                  text: const TextSpan(
+                      text: 'Terms of Use',
+                      style: TextStyle(color: Colors.white),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: ' and ',
+                            style: TextStyle(color: Color(0X8AFFFFFF))),
+                        TextSpan(
+                            text: 'Privacy Policy',
+                            style: TextStyle(color: Colors.white))
+                      ]),
+                ),
+              ),
+            )
           ],
         ),
       ),
