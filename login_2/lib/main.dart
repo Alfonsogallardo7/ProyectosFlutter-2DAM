@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_2/styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,14 +43,41 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),*/
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: <Widget>[
-            Stack(
-              //fit: StackFit.expand,
-              children: [
-                Image.asset('assets/images/fondo_login2.png'),],
+            Container(
+              height: MediaQuery.of(context).size.height * 1,
+              width: MediaQuery.of(context).size.height * 1,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/fondo_login2.png'),
+                      fit: BoxFit.cover)),
             ),
+            Positioned(
+                top: 30,
+                right: 30,
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: LoginStyle.bodyPadding,
+                        right: LoginStyle.bodyPadding),
+                    child: GestureDetector(
+                        onTap: () {},
+                        child: Text(
+                          'Skip',
+                          style: LoginStyle.textTittle,
+                        )))),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/red-bull-logo.png',
+                    width: 500,
+                    height: 270,
+                  )
+                ],
+              ),
+            )
 
             /*Text(
               '$_counter',
