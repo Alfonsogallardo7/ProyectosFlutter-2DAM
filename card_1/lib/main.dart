@@ -45,17 +45,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Card(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(CardStyle.bodyPadding),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+          child: Padding(
+            padding: const EdgeInsets.only(
+                left: CardStyle.bodyPadding, top: CardStyle.bodyPadding2),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
                       children: [
                         Text(
                           '20:55',
@@ -63,87 +64,127 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         Text(
                           'SALIDA',
-                          style: CardStyle.textCiudad,
+                          style: CardStyle.subTittle,
                         ),
                       ],
                     ),
+                    Container(
+                      margin: EdgeInsets.only(left: 100),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4)),
+                                child: Text(
+                                  'MAD',
+                                  style: CardStyle.textCiudad,
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Madrid',
+                                style: CardStyle.textCiudad,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              const SizedBox(width: 8),
+                              Image.asset(
+                                "assets/images/iberia_logo.png",
+                                width: 30,
+                                height: 30,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Iberia 7448',
+                                style: CardStyle.subTittle2,
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Duración 2h 10m',
+                            style: CardStyle.subTittle2,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: CardStyle.bodyPadding,
+                      bottom: CardStyle.bodyPadding),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Column(
+                        children: [
+                          Text(
+                            '20:55',
+                            style: CardStyle.textCiudad,
+                          ),
+                          Text(
+                            'SALIDA',
+                            style: CardStyle.subTittle,
+                          ),
+                        ],
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 110),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(4)),
+                                  child: Text(
+                                    'LHR',
+                                    style: CardStyle.textCiudad,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Londres',
+                                  style: CardStyle.textCiudad,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'MAD',
-                    style: CardStyle.textCiudad,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
+                ),
+
+                /*SizedBox(
+                  width: MediaQuery.of(context).size.width * 1,
+                  height: 100,
+                  child: Text(
                     'Madrid',
                     style: CardStyle.textCiudad,
                   ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    "assets/images/iberia_logo.png",
-                    width: 30,
-                    height: 30,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'Iberia 7448',
-                  ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  SizedBox(width: 8),
-                  Text('Duración 2h 10m'),
-                  SizedBox(width: 8),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(CardStyle.bodyPadding),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '22:05',
-                          style: CardStyle.textCiudad,
-                        ),
-                        Text(
-                          'LLEGADA',
-                          style: CardStyle.textCiudad,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Text(
-                    'LHR',
-                    style: CardStyle.textCiudad,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Londres',
-                    style: CardStyle.textCiudad,
-                  ),
-                  const SizedBox(width: 8),
-                ],
-              ),
-
-              /*SizedBox(
-                width: MediaQuery.of(context).size.width * 1,
-                height: 100,
-                child: Text(
-                  'Madrid',
-                  style: CardStyle.textCiudad,
-                ),
-              ),*/
-            ],
+                ),*/
+              ],
+            ),
           ),
         ),
       ),
