@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.yellow,
       ),
-      home: const MyHomePage(title: 'Star Wars'),
+      home: const MyHomePage(
+        title: 'Star Wars',
+      ),
     );
   }
 }
@@ -45,46 +47,75 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text(
+          'Star Wars',
+          style: TextStyle(fontFamily: 'StarJedi'),
+        ),
       ),
-      body: Column(
-        children: <Widget>[
-          Card(
-            margin: const EdgeInsets.only(top: 20),
-            child: SizedBox(
-              height: 100,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Column(
-                        children: <Widget>[Text(items.elementAt(index).name),
-                        Image.network('https://starwars-visualguide.com/assets/img/planets/${index +1}.jpg', width: 50,)],
-                      ),
-                    );
-                  }),
+      body: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Card(
+              color: Colors.black,
+              margin: const EdgeInsets.only(top: 20),
+              child: SizedBox(
+                height: 200,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: Colors.black,
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              items.elementAt(index).name,
+                              style: const TextStyle(
+                                  fontFamily: 'StarJedi', color: Colors.white),
+                            ),
+                            Image.network(
+                              'https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg',
+                              width: 150,
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
             ),
-          ),
-          Card(
-            margin: const EdgeInsets.only(top: 20),
-            child: SizedBox(
-              height: 100,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: items2.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Column(
-                        children: <Widget>[Text(items2.elementAt(index).name),
-                        Image.network('https://starwars-visualguide.com/assets/img/characters/${index +1}.jpg', width: 50,)],
-                      ),
-                    );
-                  }),
+            Card(
+              color: Colors.black,
+              margin: const EdgeInsets.only(top: 20),
+              child: SizedBox(
+                height: 200,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: items2.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        color: Colors.black,
+                        child: Column(
+                          children: <Widget>[
+                            Text(items2.elementAt(index).name,
+                                style: const TextStyle(
+                                    fontFamily: 'StarJedi',
+                                    color: Colors.white)),
+                            Image.network(
+                              'https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg',
+                              width: 100,
+                            )
+                          ],
+                        ),
+                      );
+                    }),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+      backgroundColor: Colors.black,
     );
   }
 }
