@@ -52,70 +52,83 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextStyle(fontFamily: 'StarJedi'),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Card(
-              color: Colors.black,
-              margin: const EdgeInsets.only(top: 20),
-              child: SizedBox(
-                height: 200,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        color: Colors.black,
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              items.elementAt(index).name,
-                              style: const TextStyle(
-                                  fontFamily: 'StarJedi', color: Colors.white),
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Stack(children: <Widget>[
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/images/fondo_estrellas.gif",
+                    ),
+                    fit: BoxFit.cover)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Card(
+                  color: Colors.black,
+                  margin: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            color: Colors.black,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  items.elementAt(index).name,
+                                  style: const TextStyle(
+                                      fontFamily: 'StarJedi',
+                                      color: Colors.white),
+                                ),
+                                Image.network(
+                                  'https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg',
+                                  width: 150,
+                                )
+                              ],
                             ),
-                            Image.network(
-                              'https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg',
-                              width: 150,
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
+                          );
+                        }),
+                  ),
+                ),
+                Card(
+                  color: Colors.black,
+                  margin: const EdgeInsets.only(top: 20),
+                  child: SizedBox(
+                    height: 200,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: items2.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            color: Colors.black,
+                            child: Column(
+                              children: <Widget>[
+                                Text(items2.elementAt(index).name,
+                                    style: const TextStyle(
+                                        fontFamily: 'StarJedi',
+                                        color: Colors.white)),
+                                Image.network(
+                                  'https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg',
+                                  width: 100,
+                                )
+                              ],
+                            ),
+                          );
+                        }),
+                  ),
+                ),
+              ],
             ),
-            Card(
-              color: Colors.black,
-              margin: const EdgeInsets.only(top: 20),
-              child: SizedBox(
-                height: 200,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: items2.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        color: Colors.black,
-                        child: Column(
-                          children: <Widget>[
-                            Text(items2.elementAt(index).name,
-                                style: const TextStyle(
-                                    fontFamily: 'StarJedi',
-                                    color: Colors.white)),
-                            Image.network(
-                              'https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg',
-                              width: 100,
-                            )
-                          ],
-                        ),
-                      );
-                    }),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ]),
       ),
-      backgroundColor: Colors.black,
     );
   }
 }
