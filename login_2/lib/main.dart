@@ -64,9 +64,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         onTap: () {},
                         child: Text(
                           'Skip',
-                          style: LoginStyle.textTittle,
+                          style: LoginStyle.textSkip,
                         )))),
-            Container(
+            Padding(
+              padding: const EdgeInsets.all(LoginStyle.bodyPadding),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -74,10 +75,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     'assets/images/red-bull-logo.png',
                     width: 500,
                     height: 270,
+                  ),
+                  Text(
+                    'Sign in to get the most of',
+                    style: LoginStyle.textTittle,
+                  ),
+                  Text(
+                    'Red Bull',
+                    style: LoginStyle.textTittle,
+                  ),
+                  Text(
+                    'Create an account to save favotites and',
+                    style: LoginStyle.textFormat(Colors.white, LoginStyle.textSizeSmall),
                   )
                 ],
               ),
-            )
+            ),
 
             /*Text(
               '$_counter',

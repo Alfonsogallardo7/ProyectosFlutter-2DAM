@@ -169,6 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 height: 1,
+                width:  MediaQuery.of(context).size.width,
                 color: Colors.grey,
               ),
               Padding(
@@ -179,7 +180,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     left: CardStyle.bodyPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Text('54€', style: CardStyle.textInferior,), Text('SELECCIONAR', style: CardStyle.textInferior,)],
+                  children: [
+                    Text(
+                      '54€',
+                      style: CardStyle.textInferior,
+                    ),
+                    Text(
+                      'SELECCIONAR',
+                      style: CardStyle.textInferior,
+                    )
+                  ],
                 ),
               )
             ],
