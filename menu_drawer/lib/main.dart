@@ -154,6 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ]),
       ),
       drawer: Drawer(
+        backgroundColor: Colors.yellow,
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -166,54 +167,145 @@ class _MyHomePageState extends State<MyHomePage> {
               )),
             ),
             ListTile(
-              title: const Text('Personajes'),
+              title: const Text(
+                'Planetas',
+                style: TextStyle(fontFamily: 'StarJedi'),
+              ),
               onTap: () {
-                Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Card(
-                          color: Colors.transparent,
-                          margin: const EdgeInsets.only(top: 20),
-                          child: SizedBox(
-                            height: 200,
-                            child: FutureBuilder<List<Planetas>>(
-                                future: items,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return _planetasList(snapshot.data!);
-                                  } else if (snapshot.hasError) {
-                                    return Text('${snapshot.error}');
-                                  }
-                                  return const CircularProgressIndicator();
-                                }
-                                /*return Card(
-                            color: Colors.black,
-                            child: Column(
-                              children: <Widget>[
-                                Text(
-                                  items.elementAt(index).name,
-                                  style: const TextStyle(
-                                      fontFamily: 'StarJedi',
-                                      color: Colors.white),
-                                ),
-                                Image.network(
-                                  'https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg',
-                                  width: 150,
-                                )
-                              ],
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                            appBar: AppBar(
+                              title: const Text(
+                                'Star Wars',
+                                style: TextStyle(fontFamily: 'StarJedi'),
+                              ),
                             ),
-                          );
-                        }*/
-                                ),
-                          ),
-                        ),
-                      ]),
-                );
-                Navigator.pop(context);
+                            body: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Stack(children: <Widget>[
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                              "assets/images/fondo_estrellas.gif",
+                                            ),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              'Planetas',
+                                              style: TextStyle(
+                                                  fontFamily: 'StarJedi',
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                            ),
+                                          ),
+                                          Card(
+                                            color: Colors.transparent,
+                                            margin:
+                                                const EdgeInsets.only(top: 20),
+                                            child: SizedBox(
+                                              height: 200,
+                                              child:
+                                                  FutureBuilder<List<Planetas>>(
+                                                      future: items,
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        if (snapshot.hasData) {
+                                                          return _planetasList(
+                                                              snapshot.data!);
+                                                        } else if (snapshot
+                                                            .hasError) {
+                                                          return Text(
+                                                              '${snapshot.error}');
+                                                        }
+                                                        return const CircularProgressIndicator();
+                                                      }),
+                                            ),
+                                          ),
+                                        ]),
+                                  )
+                                ])))));
               },
             ),
+            ListTile(
+              title: const Text(
+                'Personajes',
+                style: TextStyle(fontFamily: 'StarJedi'),
+              ),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Scaffold(
+                            appBar: AppBar(
+                              title: const Text(
+                                'Star Wars',
+                                style: TextStyle(fontFamily: 'StarJedi'),
+                              ),
+                            ),
+                            body: SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                child: Stack(children: <Widget>[
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                              "assets/images/fondo_estrellas.gif",
+                                            ),
+                                            fit: BoxFit.cover)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 8.0, top: 8.0, left: 8.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        const Text(
+                                          'Personajes',
+                                          style: TextStyle(
+                                              fontFamily: 'StarJedi',
+                                              color: Colors.white,
+                                              fontSize: 20),
+                                        ),
+                                        Card(
+                                            color: Colors.transparent,
+                                            margin:
+                                                const EdgeInsets.only(top: 20),
+                                            child: SizedBox(
+                                                height: 200,
+                                                child: FutureBuilder<
+                                                        List<Personas>>(
+                                                    future: items2,
+                                                    builder: (context, index) {
+                                                      if (index.hasData) {
+                                                        return _personasList(
+                                                            index.data!);
+                                                      } else if (index
+                                                          .hasError) {
+                                                        return Text(
+                                                            '${index.error}');
+                                                      }
+                                                      return const CircularProgressIndicator();
+                                                    }))),
+                                      ],
+                                    ),
+                                  )
+                                ])))));
+              },
+            )
           ],
         ),
       ),
