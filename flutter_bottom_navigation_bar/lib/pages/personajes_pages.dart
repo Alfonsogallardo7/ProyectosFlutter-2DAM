@@ -15,6 +15,13 @@ class PersonajesPages extends StatefulWidget {
 
 class _PersonajesPagesState extends State<PersonajesPages> {
   late Future<List<Personajes>> items;
+
+  @override
+  void initState() {
+    items = fetchPersonajes();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
