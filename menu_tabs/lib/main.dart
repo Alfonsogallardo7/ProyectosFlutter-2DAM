@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
@@ -50,45 +51,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Star Wars',
-          style: TextStyle(fontFamily: 'StarJedi'),
-        ),
-      ),
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: Stack(children: <Widget>[
-          Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      "assets/images/fondo_estrellas.gif",
-                    ),
-                    fit: BoxFit.cover)),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Card(
-                  color: Colors.transparent,
-                  margin: const EdgeInsets.only(top: 20),
-                  child: SizedBox(
-                    height: 200,
-                    child: FutureBuilder<List<Planetas>>(
-                        future: items,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return _planetasList(snapshot.data!);
-                          } else if (snapshot.hasError) {
-                            return Text('${snapshot.error}');
-                          }
-                          return const CircularProgressIndicator();
-                        }
-                        /*return Card(
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.yellow,
+              bottom: const TabBar(indicatorColor: Colors.black, tabs: [
+                Tab(icon: Icon(Icons.people, color: Colors.black,)),
+                Tab(icon: Icon(Icons.people_alt, color: Colors.black,))
+              ]),
+              title: const Text(
+                'Star Wars',
+                style: TextStyle(fontFamily: 'StarJedi', color: Colors.black),
+              ),
+            ),
+            body: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Stack(children: <Widget>[
+                  Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                              "assets/images/fondo_estrellas.gif",
+                            ),
+                            fit: BoxFit.cover)),
+                  ),/*TabBarView(children: [
+              
+                  Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Card(
+                          color: Colors.transparent,
+                          margin: const EdgeInsets.only(top: 20),
+                          child: SizedBox(
+                            height: 200,
+                            child: FutureBuilder<List<Planetas>>(
+                                future: items,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return _planetasList(snapshot.data!);
+                                  } else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                  }
+                                  return const CircularProgressIndicator();
+                                }
+                                /*return Card(
                             color: Colors.black,
                             child: Column(
                               children: <Widget>[
@@ -106,23 +116,23 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           );
                         }*/
+                                ),
+                          ),
                         ),
-                  ),
-                ),
-                Card(
-                  color: Colors.transparent,
-                  margin: const EdgeInsets.only(top: 20),
-                  child: SizedBox(
-                    height: 200,
-                    child: FutureBuilder<List<Personas>>(
-                        future: items2,
-                        builder: (context, index) {
-                          if (index.hasData) {
-                            return _personasList(index.data!);
-                          } else if (index.hasError) {
-                            return Text('${index.error}');
-                          }
-                          return const CircularProgressIndicator(); /*Card(
+                        Card(
+                          color: Colors.transparent,
+                          margin: const EdgeInsets.only(top: 20),
+                          child: SizedBox(
+                            height: 200,
+                            child: FutureBuilder<List<Personas>>(
+                                future: items2,
+                                builder: (context, index) {
+                                  if (index.hasData) {
+                                    return _personasList(index.data!);
+                                  } else if (index.hasError) {
+                                    return Text('${index.error}');
+                                  }
+                                  return const CircularProgressIndicator(); /*Card(
                             color: Colors.black,
                             child: Column(
                               children: <Widget>[
@@ -137,16 +147,112 @@ class _MyHomePageState extends State<MyHomePage> {
                               ],
                             ),
                           );*/
-                        }),
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
+                ]),
+              ),
+            ])*/
+            
+            
+            
+            /* SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Stack(children: <Widget>[
+              Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                          "assets/images/fondo_estrellas.gif",
+                        ),
+                        fit: BoxFit.cover)),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Card(
+                      color: Colors.transparent,
+                      margin: const EdgeInsets.only(top: 20),
+                      child: SizedBox(
+                        height: 200,
+                        child: FutureBuilder<List<Planetas>>(
+                            future: items,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return _planetasList(snapshot.data!);
+                              } else if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              }
+                              return const CircularProgressIndicator();
+                            }
+                            /*return Card(
+                            color: Colors.black,
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  items.elementAt(index).name,
+                                  style: const TextStyle(
+                                      fontFamily: 'StarJedi',
+                                      color: Colors.white),
+                                ),
+                                Image.network(
+                                  'https://starwars-visualguide.com/assets/img/planets/${index + 1}.jpg',
+                                  width: 150,
+                                )
+                              ],
+                            ),
+                          );
+                        }*/
+                            ),
+                      ),
+                    ),
+                    Card(
+                      color: Colors.transparent,
+                      margin: const EdgeInsets.only(top: 20),
+                      child: SizedBox(
+                        height: 200,
+                        child: FutureBuilder<List<Personas>>(
+                            future: items2,
+                            builder: (context, index) {
+                              if (index.hasData) {
+                                return _personasList(index.data!);
+                              } else if (index.hasError) {
+                                return Text('${index.error}');
+                              }
+                              return const CircularProgressIndicator(); /*Card(
+                            color: Colors.black,
+                            child: Column(
+                              children: <Widget>[
+                                Text(items2.elementAt(index).name,
+                                    style: const TextStyle(
+                                        fontFamily: 'StarJedi',
+                                        color: Colors.white)),
+                                Image.network(
+                                  'https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg',
+                                  width: 100,
+                                )
+                              ],
+                            ),
+                          );*/
+                            }),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),*/
+            ]),
           ),
-        ]),
+            ),
       ),
     );
   }
+
+  
 
   Future<List<Personas>> fetchPersonas() async {
     final response = await http.get(Uri.parse('https://swapi.dev/api/people'));
