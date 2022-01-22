@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_bar/models/personajes_response.dart';
 import 'package:flutter_bottom_navigation_bar/pages/personajes_pages.dart';
 
 void main() {
@@ -44,11 +43,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     Text(
       'Index 2: School',
       style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    )
   ];
 
   void _onItemTapped(int index) {
@@ -61,13 +56,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Rick and Morty'),
+        backgroundColor: Colors.lightGreenAccent,
+        title: const Text('Rick and Morty', style: TextStyle(fontFamily: 'Rick' , color: Colors.blue, fontSize: 30),),
       ),
       body: Center(child: _widgetOptions.elementAt(_selectIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home),
-        label: 'Characters', backgroundColor: Colors.red),
+        BottomNavigationBarItem(icon: Icon(Icons.person),
+        label: 'Personajes', backgroundColor: Colors.lightGreenAccent),
         BottomNavigationBarItem(
             icon: Icon(Icons.business),
             label: 'Business',
@@ -77,15 +73,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             icon: Icon(Icons.school),
             label: 'School',
             backgroundColor: Colors.purple,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
-          ),
+          )
       ],
       currentIndex: _selectIndex,
-      selectedItemColor: Colors.amber,
+      selectedItemColor: Colors.blue,
       onTap: _onItemTapped,),
       
     );

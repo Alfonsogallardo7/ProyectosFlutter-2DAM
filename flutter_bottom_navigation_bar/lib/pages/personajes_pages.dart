@@ -25,12 +25,6 @@ class _PersonajesPagesState extends State<PersonajesPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            'Star Wars',
-            style: TextStyle(fontFamily: 'StarJedi'),
-          ),
-        ),
         body: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Stack(children: <Widget>[
@@ -38,7 +32,7 @@ class _PersonajesPagesState extends State<PersonajesPages> {
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
-                          "assets/images/fondo_estrellas.gif",
+                          "assets/images/fondo_portal.png",
                         ),
                         fit: BoxFit.cover)),
               ),
@@ -48,16 +42,6 @@ class _PersonajesPagesState extends State<PersonajesPages> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          'Planetas',
-                          style: TextStyle(
-                              fontFamily: 'StarJedi',
-                              color: Colors.white,
-                              fontSize: 20),
-                        ),
-                      ),
                       Card(
                         color: Colors.transparent,
                         margin: const EdgeInsets.only(top: 20),
@@ -105,7 +89,10 @@ class _PersonajesPagesState extends State<PersonajesPages> {
       color: Colors.transparent,
       child: Column(
         children: <Widget>[
-          Text(personajes.name),
+          Padding(
+            padding: const EdgeInsets.only(bottom:8.0),
+            child: Text(personajes.name, style: TextStyle(fontFamily: 'Rick', color: Colors.white),),
+          ),
           Image.network(
             'https://rickandmortyapi.com/api/character/avatar/${index + 1}.jpeg',
             width: 120,
