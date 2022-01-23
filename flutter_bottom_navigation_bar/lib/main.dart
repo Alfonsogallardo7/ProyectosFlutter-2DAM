@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bottom_navigation_bar/pages/episodes_pages.dart';
+import 'package:flutter_bottom_navigation_bar/pages/location_pages.dart';
 import 'package:flutter_bottom_navigation_bar/pages/personajes_pages.dart';
 
 void main() {
@@ -19,10 +21,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
 class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({ Key? key }) : super(key: key);
+  const MyStatefulWidget({Key? key}) : super(key: key);
 
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
@@ -30,20 +30,12 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectIndex = 0;
-  static const TextStyle optionStyle = 
-    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-    static const List<Widget> _widgetOptions = <Widget>[
-      
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
     PersonajesPages(),
-
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    )
+    LocationPages(),
+    EspisodesPages()
   ];
 
   void _onItemTapped(int index) {
@@ -57,30 +49,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightGreenAccent,
-        title: const Text('Rick and Morty', style: TextStyle(fontFamily: 'Rick' , color: Colors.blue, fontSize: 30),),
+        title: const Text(
+          'Rick and Morty',
+          style:
+              TextStyle(fontFamily: 'Rick', color: Colors.blue, fontSize: 30),
+        ),
       ),
-      body: Center(child: _widgetOptions.elementAt(_selectIndex),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.person),
-        label: 'Personajes', backgroundColor: Colors.lightGreenAccent),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), label: 'Personajes'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_city),
+            label: 'Localizaciones',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
+            icon: Icon(Icons.list),
+            label: 'Episodios',
           )
-      ],
-      currentIndex: _selectIndex,
-      selectedItemColor: Colors.blue,
-      onTap: _onItemTapped,),
-      
+        ],
+        currentIndex: _selectIndex,
+        selectedItemColor: Colors.blue,
+        backgroundColor: Colors.lightGreenAccent,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }
-
-

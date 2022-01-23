@@ -1,23 +1,23 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bottom_navigation_bar/models/personajes_response.dart';
+import 'package:flutter_bottom_navigation_bar/models/episodes_response.dart';
 import 'package:http/http.dart' as http;
 
-class PersonajesPages extends StatefulWidget {
-  const PersonajesPages({Key? key}) : super(key: key);
+
+class EspisodesPages extends StatefulWidget {
+  const EspisodesPages({ Key? key }) : super(key: key);
 
   @override
-  _PersonajesPagesState createState() => _PersonajesPagesState();
+  _EspisodesPagesState createState() => _EspisodesPagesState();
 }
 
-class _PersonajesPagesState extends State<PersonajesPages> {
-  late Future<List<Personajes>> items;
+class _EspisodesPagesState extends State<EspisodesPages> {
+  late Future<List<Episode>> items;
 
   @override
   void initState() {
-    items = fetchPersonajes();
+    items = fetchEpisodes();
     super.initState();
   }
 
@@ -43,14 +43,13 @@ class _PersonajesPagesState extends State<PersonajesPages> {
                     children: <Widget>[
                       Card(
                         color: Colors.transparent,
-                        margin: const EdgeInsets.only(top: 20),
                         child: SizedBox(
-                          height: 200,
-                          child: FutureBuilder<List<Personajes>>(
+                          height: 550,
+                          child: FutureBuilder<List<Episode>>(
                               future: items,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  return _personajesList(snapshot.data!);
+                                  return _episodeList(snapshot.data!);
                                 } else if (snapshot.hasError) {
                                   return Text('${snapshot.error}');
                                 }
@@ -63,43 +62,50 @@ class _PersonajesPagesState extends State<PersonajesPages> {
             ])));
   }
 
-  Future<List<Personajes>> fetchPersonajes() async {
+  Future<List<Episode>> fetchEpisodes() async {
     final response =
-        await http.get(Uri.parse('https://rickandmortyapi.com/api/character'));
+        await http.get(Uri.parse('https://rickandmortyapi.com/api/episode'));
     if (response.statusCode == 200) {
-      return PersonajesResponse.fromJson(jsonDecode(response.body)).results;
+      return EpisodesResponse.fromJson(jsonDecode(response.body)).results;
     } else {
-      throw Exception('Failed to load persons');
+      throw Exception('Failed to load location');
     }
   }
 
-  Widget _personajesList(List<Personajes> personajesList) {
+  Widget _episodeList(List<Episode> episodeList) {
     return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: personajesList.length,
+      scrollDirection: Axis.vertical,
+      itemCount: episodeList.length,
       itemBuilder: (context, index) {
-        return _personajesItem(personajesList.elementAt(index), index);
+        return _episodeItem(episodeList.elementAt(index));
       },
     );
   }
 
-  Widget _personajesItem(Personajes personajes, int index) {
-    return Card(
-      color: Colors.transparent,
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              personajes.name,
-              style: const TextStyle(fontFamily: 'Rick', color: Colors.white),
+    Widget _episodeItem(Episode episode) {
+    return Opacity(
+      opacity: 0.5,
+      child: Card(
+        color: Colors.white,
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all( 8.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    episode.episode,
+                    style: const TextStyle(fontFamily: 'Rick', color: Colors.black,),
+                  ),
+                  Text(
+                    episode.name,
+                    style: const TextStyle(fontFamily: 'Rick', color: Colors.black),
+                  )
+                ],
+              ),
             ),
-          ),
-          Image.network(
-            'https://rickandmortyapi.com/api/character/avatar/${index + 1}.jpeg',
-            width: 120,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
