@@ -1,10 +1,13 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:popcorn_home_page/models/popular_response.dart';
 import 'package:http/http.dart' as http;
 
-
 class PopularPages extends StatefulWidget {
-  const PopularPages({ Key? key }) : super(key: key);
+  const PopularPages({Key? key}) : super(key: key);
 
   @override
   _PopularPagesState createState() => _PopularPagesState();
@@ -15,24 +18,157 @@ class _PopularPagesState extends State<PopularPages> {
 
   @override
   void initState() {
-    items = fetchPersonajes();
+    items = fetchFilms();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+        body: Center(
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: Colors.grey[400],
+            ),
+            margin: const EdgeInsets.all(40),
+            width: MediaQuery.of(context).size.width,
+            child: Stack(children: <Widget>[
+              Flexible(flex: 1, child: Container(color: Colors.grey)),
+              Flexible(
+                flex: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.grey[400],
+                  ),
+                  alignment: Alignment.center,
+                  height: 70,
+                  width: MediaQuery.of(context).size.width,
+                  child: GestureDetector(
+                    //onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const SingIn()));},
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Color(0xFF212121)),
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+          ),
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Stack(children: <Widget>[
+                /*Container(
+                      height: 560,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                      ),
+
+                      child: Column(mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.only(
+                          top: 40,
+                          left: 30,
+                          right: 30
+                        ),
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.only(left:8, right: 8,
+                        ),
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),)
+                      )],),
+                    ), */
+
+                Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Card(
+                          color: Colors.white,
+                          margin: const EdgeInsets.only(top: 20),
+                          child: SizedBox(
+                            height: 250,
+                            child: FutureBuilder<List<Films>>(
+                                future: items,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return _filmsList(snapshot.data!);
+                                  } else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                  }
+                                  return const CircularProgressIndicator();
+                                }),
+                          ),
+                        ),
+                      ]),
+                )
+              ])),
+        ],
+      ),
+    ));
+  }
+
+  Future<List<Films>> fetchFilms() async {
+    final response = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/movie/popular?api_key=d64edfd74101230753aa7b2393ffe8df&language=es-ES&page=1'));
+    if (response.statusCode == 200) {
+      return PopularResponse.fromJson(jsonDecode(response.body)).results;
+    } else {
+      throw Exception('Failed to load films');
+    }
+  }
+
+  Widget _filmsList(List<Films> filmsList) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: filmsList.length,
+      itemBuilder: (context, index) {
+        return _filmsItem(filmsList.elementAt(index), index);
+      },
     );
   }
 
-  Future<List<Films>> fetchPersonajes() async {
-    final response =
-        await http.get(Uri.parse('https://rickandmortyapi.com/api/character'));
-    if (response.statusCode == 200) {
-      return PersonajesResponse.fromJson(jsonDecode(response.body)).results;
-    } else {
-      throw Exception('Failed to load persons');
-    }
+  Widget _filmsItem(Films films, int index) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: 150,
+            height: 200,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              image: DecorationImage(
+                image: NetworkImage(
+                  'https://www.themoviedb.org/t/p/w1280/${films.posterPath}',
+                ),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: Text(
+              films.title,
+              style: const TextStyle(fontFamily: 'Rick', color: Colors.black),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
