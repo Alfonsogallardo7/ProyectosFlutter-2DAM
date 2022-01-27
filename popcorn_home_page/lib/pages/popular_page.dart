@@ -27,6 +27,7 @@ class _PopularPagesState extends State<PopularPages> {
     return Scaffold(
         body: Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -64,53 +65,23 @@ class _PopularPagesState extends State<PopularPages> {
           SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Stack(children: <Widget>[
-                /*Container(
-                      height: 560,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10))
-                      ),
-
-                      child: Column(mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Padding(padding: EdgeInsets.only(
-                          top: 40,
-                          left: 30,
-                          right: 30
-                        ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.only(left:8, right: 8,
-                        ),
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),)
-                      )],),
-                    ), */
-
                 Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Card(
-                          color: Colors.white,
-                          margin: const EdgeInsets.only(top: 20),
-                          child: SizedBox(
-                            height: 250,
-                            child: FutureBuilder<List<Films>>(
-                                future: items,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return _filmsList(snapshot.data!);
-                                  } else if (snapshot.hasError) {
-                                    return Text('${snapshot.error}');
-                                  }
-                                  return const CircularProgressIndicator();
-                                }),
-                          ),
+                        SizedBox(
+                          height: 300,
+                          child: FutureBuilder<List<Films>>(
+                              future: items,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return _filmsList(snapshot.data!);
+                                } else if (snapshot.hasError) {
+                                  return Text('${snapshot.error}');
+                                }
+                                return const CircularProgressIndicator();
+                              }),
                         ),
                       ]),
                 )
@@ -141,34 +112,50 @@ class _PopularPagesState extends State<PopularPages> {
   }
 
   Widget _filmsItem(Films films, int index) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            width: 150,
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://www.themoviedb.org/t/p/w1280/${films.posterPath}',
+    return Container(
+      margin: const EdgeInsets.only(right: 20),
+      child: SizedBox(
+          width: 115,
+          height: 100,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.network(
+                      'https://image.tmdb.org/t/p/w200${films.posterPath}',
+                      width: 115,
+                      fit: BoxFit.fill,
+                    )),
+                Container(
+                  margin: const EdgeInsets.only(left: 5, top: 5),
+                  child: Text(
+                    films.title,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15.0),
-            child: Text(
-              films.title,
-              style: const TextStyle(fontFamily: 'Rick', color: Colors.black),
-            ),
-          ),
-        ],
-      ),
+                Container(
+                    margin: const EdgeInsets.only(left: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                          size: 20,
+                        ),
+                        Text(
+                          films.voteAverage.toString(),
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ],
+                    ))
+              ])),
     );
   }
 }
