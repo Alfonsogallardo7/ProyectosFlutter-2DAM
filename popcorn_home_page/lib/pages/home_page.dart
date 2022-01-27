@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           label: 'DN')
         ],
         currentIndex: _selectIndex,
-        selectedItemColor: Colors.purple,
+        selectedItemColor: Colors.deepPurple[800],
         unselectedItemColor: Colors.grey,
         backgroundColor: Colors.red,
         onTap: _onItemTapped,
