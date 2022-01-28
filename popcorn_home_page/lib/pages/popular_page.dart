@@ -29,202 +29,204 @@ class _PopularPagesState extends State<PopularPages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 45.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  width: 100,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        'assets/images/memojis.jpg',
-                      )),
-                ),
-                const Text(
-                  'Ester Exposito',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 100.0),
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.grey[200]),
-                    child: Icon(
-                      Icons.cast_rounded,
-                      color: Colors.deepPurple[800],
-                      size: 20,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 35),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const <Widget>[
-                  Text(
-                    'Movie, Series,',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-                  ),
-                  Text(
-                    'TV Shows ...',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-                  ),
-                ],
-              ),
-            ),
-            Stack(children: <Widget>[
-              //Flexible(flex: 1, child: Container(color: Colors.grey)),
+        body: SingleChildScrollView(
+          child: Center(
+              child: Padding(
+          padding: const EdgeInsets.only(top: 45.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Flexible(
-                    flex: 1,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0),
-                        color: Colors.grey[200],
-                      ),
-                      margin:
-                          const EdgeInsets.only(top: 40, bottom: 40, left: 20),
-                      alignment: Alignment.center,
-                      height: 50,
-                      width: MediaQuery.of(context).size.width,
-                      child: GestureDetector(
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, right: 5.0),
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.deepPurple[800],
-                                size: 25,
-                              ),
-                            ),
-                            const Text(
-                              'Search',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w200,
-                                  fontSize: 17,
-                                  color: Color(0xFFBDBDBD)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    width: 100,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                          'assets/images/memojis.jpg',
+                        )),
+                  ),
+                  const Text(
+                    'Ester Exposito',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20.0, right: 20),
+                    padding: const EdgeInsets.only(left: 100.0),
                     child: Container(
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
-                          color: Colors.deepPurple[800]),
-                      child: const Icon(
-                        Icons.tune,
-                        color: Colors.white,
+                          color: Colors.grey[200]),
+                      child: Icon(
+                        Icons.cast_rounded,
+                        color: Colors.deepPurple[800],
                         size: 20,
                       ),
                     ),
                   )
                 ],
               ),
-            ]),
-            Container(
-              padding: const EdgeInsets.only(left: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 35),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-              const Padding(
-                padding:  EdgeInsets.only(bottom:12.0),
-                child:  Text(
-                  'Up Coming',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  children: const <Widget>[
+                    Text(
+                      'Movie, Series,',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                    ),
+                    Text(
+                      'TV Shows ...',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Stack(children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 300,
-                          child: FutureBuilder<List<UpFilms>>(
-                              future: items2,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return _upFilmsList(snapshot.data!);
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return const CircularProgressIndicator();
-                              }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ]),
-              )
-            ])),
-            Container(
-              padding: const EdgeInsets.only(left: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Stack(children: <Widget>[
+                //Flexible(flex: 1, child: Container(color: Colors.grey)),
+                Row(
                   children: [
-              const Padding(
-                padding:  EdgeInsets.only(bottom:12.0),
-                child:  Text(
-                  'Popular',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                ),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Stack(children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 300,
-                          child: FutureBuilder<List<Films>>(
-                              future: items,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return _filmsList(snapshot.data!);
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return const CircularProgressIndicator();
-                              }),
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey[200],
                         ),
-                      ],
+                        margin:
+                            const EdgeInsets.only(top: 40, bottom: 40, left: 20),
+                        alignment: Alignment.center,
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        child: GestureDetector(
+                          child: Row(
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 10.0, right: 5.0),
+                                child: Icon(
+                                  Icons.search,
+                                  color: Colors.deepPurple[800],
+                                  size: 25,
+                                ),
+                              ),
+                              const Text(
+                                'Search',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 17,
+                                    color: Color(0xFFBDBDBD)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 20.0, right: 20),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.deepPurple[800]),
+                        child: const Icon(
+                          Icons.tune,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ]),
+              Container(
+                padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                const Padding(
+                  padding:  EdgeInsets.only(bottom:12.0),
+                  child:  Text(
+                    'Up Coming',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
                   ),
-                ]),
-              )
-            ])),
-          ],
-        ),
-      ),
-    ));
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 300,
+                            child: FutureBuilder<List<UpFilms>>(
+                                future: items2,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return _upFilmsList(snapshot.data!);
+                                  } else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                  }
+                                  return const CircularProgressIndicator();
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+                )
+              ])),
+              Container(
+                padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                const Padding(
+                  padding:  EdgeInsets.only(bottom:12.0),
+                  child:  Text(
+                    'Popular',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+                  ),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 300,
+                            child: FutureBuilder<List<Films>>(
+                                future: items,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return _filmsList(snapshot.data!);
+                                  } else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                  }
+                                  return const CircularProgressIndicator();
+                                }),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+                )
+              ])),
+            ],
+          ),
+              ),
+            ),
+        ));
   }
 
   Future<List<UpFilms>> fetchUpFilms() async {
