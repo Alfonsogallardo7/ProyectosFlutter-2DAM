@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:popcorn_home_page/models/popular_response.dart';
 import 'package:http/http.dart' as http;
 import 'package:popcorn_home_page/models/upcoming_response.dart';
+import 'package:popcorn_home_page/pages/movie_page.dart';
 
 class PopularPages extends StatefulWidget {
   const PopularPages({Key? key}) : super(key: key);
@@ -16,8 +17,7 @@ class PopularPages extends StatefulWidget {
 
 class _PopularPagesState extends State<PopularPages> {
   late Future<List<Films>> items;
-    late Future<List<UpFilms>> items2;
-
+  late Future<List<UpFilms>> items2;
 
   @override
   void initState() {
@@ -30,8 +30,8 @@ class _PopularPagesState extends State<PopularPages> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Center(
-              child: Padding(
+      child: Center(
+        child: Padding(
           padding: const EdgeInsets.only(top: 45.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,11 +77,13 @@ class _PopularPagesState extends State<PopularPages> {
                   children: const <Widget>[
                     Text(
                       'Movie, Series,',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                     ),
                     Text(
                       'TV Shows ...',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                     ),
                   ],
                 ),
@@ -97,8 +99,8 @@ class _PopularPagesState extends State<PopularPages> {
                           borderRadius: BorderRadius.circular(30.0),
                           color: Colors.grey[200],
                         ),
-                        margin:
-                            const EdgeInsets.only(top: 40, bottom: 40, left: 20),
+                        margin: const EdgeInsets.only(
+                            top: 40, bottom: 40, left: 20),
                         alignment: Alignment.center,
                         height: 50,
                         width: MediaQuery.of(context).size.width,
@@ -106,8 +108,8 @@ class _PopularPagesState extends State<PopularPages> {
                           child: Row(
                             children: <Widget>[
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 10.0, right: 5.0),
+                                padding: const EdgeInsets.only(
+                                    left: 10.0, right: 5.0),
                                 child: Icon(
                                   Icons.search,
                                   color: Colors.deepPurple[800],
@@ -145,88 +147,90 @@ class _PopularPagesState extends State<PopularPages> {
                 ),
               ]),
               Container(
-                padding: const EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                const Padding(
-                  padding:  EdgeInsets.only(bottom:12.0),
-                  child:  Text(
-                    'Up Coming',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 300,
-                            child: FutureBuilder<List<UpFilms>>(
-                                future: items2,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return _upFilmsList(snapshot.data!);
-                                  } else if (snapshot.hasError) {
-                                    return Text('${snapshot.error}');
-                                  }
-                                  return const CircularProgressIndicator();
-                                }),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: Text(
+                            'Up Coming',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 22),
                           ),
-                        ],
-                      ),
-                    ),
-                  ]),
-                )
-              ])),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Stack(children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 300,
+                                    child: FutureBuilder<List<UpFilms>>(
+                                        future: items2,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            return _upFilmsList(snapshot.data!);
+                                          } else if (snapshot.hasError) {
+                                            return Text('${snapshot.error}');
+                                          }
+                                          return const CircularProgressIndicator();
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        )
+                      ])),
               Container(
-                padding: const EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 20),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                const Padding(
-                  padding:  EdgeInsets.only(bottom:12.0),
-                  child:  Text(
-                    'Popular',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  ),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Stack(children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 300,
-                            child: FutureBuilder<List<Films>>(
-                                future: items,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return _filmsList(snapshot.data!);
-                                  } else if (snapshot.hasError) {
-                                    return Text('${snapshot.error}');
-                                  }
-                                  return const CircularProgressIndicator();
-                                }),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 12.0),
+                          child: Text(
+                            'Popular',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 22),
                           ),
-                        ],
-                      ),
-                    ),
-                  ]),
-                )
-              ])),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Stack(children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(2.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    height: 300,
+                                    child: FutureBuilder<List<Films>>(
+                                        future: items,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            return _filmsList(snapshot.data!);
+                                          } else if (snapshot.hasError) {
+                                            return Text('${snapshot.error}');
+                                          }
+                                          return const CircularProgressIndicator();
+                                        }),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        )
+                      ])),
             ],
           ),
-              ),
-            ),
-        ));
+        ),
+      ),
+    ));
   }
 
   Future<List<UpFilms>> fetchUpFilms() async {
@@ -255,16 +259,22 @@ class _PopularPagesState extends State<PopularPages> {
       child: SizedBox(
           width: 115,
           height: 100,
-          child: Column(
+          child: Column(           
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.network(
-                      'https://image.tmdb.org/t/p/w200${upFilms.posterPath}',
-                      width: 115,
-                      fit: BoxFit.fill,
-                    )),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MoviePage())
+                    );
+                  },
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.network(
+                        'https://image.tmdb.org/t/p/w200${upFilms.posterPath}',
+                        width: 115,
+                        fit: BoxFit.fill,
+                      )),
+                ),
                 Container(
                   margin: const EdgeInsets.only(left: 5, top: 5),
                   child: Text(
