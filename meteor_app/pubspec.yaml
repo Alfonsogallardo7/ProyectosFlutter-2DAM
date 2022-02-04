@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^1.0.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -61,6 +62,12 @@ flutter:
   assets:
     - assets/images/fondo_estrellas.png
     - assets/images/fondo_marte.png
+    - assets/icons/world.svg
+    - assets/icons/marte.svg
+    - assets/icons/lista.svg
+    - assets/icons/globe_tapped.svg
+    - assets/icons/marte_tapped.svg
+    - assets/icons/lista_tapped.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
