@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
                 height: 25,
                 width: 25,
               ),
-              label: 'Personajes',
+              label: 'Tierra',
               activeIcon: SvgPicture.asset(
                 'assets/icons/globe_tapped.svg',
                 height: 25,
@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                 height: 25,
                 width: 25,
               ),
-              label: 'Localizaciones',
+              label: 'Marte',
               activeIcon: SvgPicture.asset(
                 'assets/icons/marte_tapped.svg',
                 height: 25,
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                 height: 25,
                 width: 25,
               ),
-              label: 'Localizaciones',
+              label: 'Ajustes',
               activeIcon: SvgPicture.asset(
                 'assets/icons/lista_tapped.svg',
                 height: 25,
