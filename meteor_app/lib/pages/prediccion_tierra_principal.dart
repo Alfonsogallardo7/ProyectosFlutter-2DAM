@@ -118,7 +118,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
 
   Future<ElTiempoResponse> fetchTiempo() async {
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=f597bdebe1ce3e95e4597d0e583b2a32'));
+        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=f597bdebe1ce3e95e4597d0e583b2a32&lang=es'));
     if (response.statusCode == 200) {
       return ElTiempoResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -167,7 +167,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
     return Container(
       margin: const EdgeInsets.only(right: 20),
       child: SizedBox(
-          width: 115,
+          width: 100,
           height: 100,
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

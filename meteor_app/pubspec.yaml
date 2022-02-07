@@ -71,6 +71,26 @@ flutter:
     - assets/icons/marte_tapped.svg
     - assets/icons/lista_tapped.svg
     - assets/icons/01d.png
+    - assets/icons/01n.png
+    - assets/icons/02d.png
+    - assets/icons/02n.png
+    - assets/icons/03d.png
+    - assets/icons/03n.png
+    - assets/icons/04d.png
+    - assets/icons/04n.png
+    - assets/icons/09d.png
+    - assets/icons/09n.png
+    - assets/icons/10d.png
+    - assets/icons/10n.png
+    - assets/icons/11d.png
+    - assets/icons/11n.png
+    - assets/icons/13n.png
+    - assets/icons/13d.png
+    - assets/icons/50d.png
+    - assets/icons/50n.png
+    
+    
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
