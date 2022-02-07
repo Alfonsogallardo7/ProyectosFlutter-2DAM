@@ -12,6 +12,10 @@ static const double textoDescripcion = 24;
 
 static const double textoMaxyMin = 21;
 
+static const double textoTempHoras = 22;
+
+static const double textoHoras = 17;
+
 static const double textoTemperatura = 102;
 
 static const double textoMiniTittle = 15;
@@ -25,5 +29,9 @@ static TextStyle styloDescripcion = TextStyle(fontSize: MeteorAppStyle.textoDesc
 static TextStyle styloTempMaxyMin = TextStyle(fontSize: MeteorAppStyle.textoMaxyMin, color: Colors.white);
 
 static TextStyle styloMiniTittle = TextStyle(fontSize: MeteorAppStyle.textoMiniTittle, color: MeteorAppStyle.colorTitulo);
+
+static TextStyle styloTempHoras = TextStyle(fontSize: MeteorAppStyle.textoTempHoras, color: Colors.white);
+
+static TextStyle styloHoras = TextStyle(fontSize: MeteorAppStyle.textoHoras, color: Colors.white);
 
 }

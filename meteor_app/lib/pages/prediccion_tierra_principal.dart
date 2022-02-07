@@ -17,10 +17,12 @@ class PrediccionTierraPrincipal extends StatefulWidget {
 
 class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   late Future<List<Hourly>> items;
+  late Future<ElTiempoResponse> items2;
 
   @override
   void initState() {
     items = fetchPorHoras();
+    items2 = fetchTiempo();
     super.initState();
   }
 
@@ -38,78 +40,134 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                     ),
                     fit: BoxFit.cover)),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 85),
-                child: Column(children: <Widget>[
-                  Text('Sevilla', style: MeteorAppStyle.styloCiudad),
-                  Text('20º', style: MeteorAppStyle.styloTemp),
-                  Text('Mayormente Soleado',
-                      style: MeteorAppStyle.styloDescripcion),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 3.0),
-                    child: Text('Max:20º Min:15º',
-                        style: MeteorAppStyle.styloTempMaxyMin),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 50.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      width: 350,
-                      height: 300,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 8.0, top: 10.0, bottom: 10),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.time,
-                                  size: 15,
-                                  color: MeteorAppStyle.colorTitulo,
-                                ),
-                                Text(' POR HORAS',
-                                    style: MeteorAppStyle.styloMiniTittle),
-                              ],
+          SingleChildScrollView(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 85),
+                  child: Column(children: <Widget>[
+                    Text('Sevilla', style: MeteorAppStyle.styloCiudad),
+                    Text('20º', style: MeteorAppStyle.styloTemp),
+                    Text('Mayormente Soleado',
+                        style: MeteorAppStyle.styloDescripcion),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Text('Max:20º Min:15º',
+                          style: MeteorAppStyle.styloTempMaxyMin),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        width: 350,
+                        height: 180,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, top: 10.0, bottom: 10),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.time,
+                                    size: 15,
+                                    color: MeteorAppStyle.colorTitulo,
+                                  ),
+                                  Text(' POR HORAS',
+                                      style: MeteorAppStyle.styloMiniTittle),
+                                ],
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: Container(
-                              height: 1,
-                              width: 350,
-                              decoration: BoxDecoration(
-                                  color: MeteorAppStyle.colorTitulo),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10.0, right: 10.0),
+                              child: Container(
+                                height: 1,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                    color: MeteorAppStyle.colorTitulo),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 300,
-                            child: FutureBuilder<List<Hourly>>(
-                                future: items,
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return _upPorHorasList(snapshot.data!);
-                                  } else if (snapshot.hasError) {
-                                    return Text('${snapshot.error}');
-                                  }
-                                  return const CircularProgressIndicator();
-                                }),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 300,
+                              child: FutureBuilder<List<Hourly>>(
+                                  future: items,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return _upPorHorasList(snapshot.data!);
+                                    } else if (snapshot.hasError) {
+                                      return Text('${snapshot.error}');
+                                    }
+                                    return const CircularProgressIndicator();
+                                  }),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  )
-                ]),
-              )
-            ],
+                     Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        width: 350,
+                        height: 180,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, top: 10.0, bottom: 10),
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    CupertinoIcons.calendar,
+                                    size: 15,
+                                    color: MeteorAppStyle.colorTitulo,
+                                  ),
+                                  Text(' 10-DAY FORECAST',
+                                      style: MeteorAppStyle.styloMiniTittle),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10.0, right: 10.0),
+                              child: Container(
+                                height: 1,
+                                width: 350,
+                                decoration: BoxDecoration(
+                                    color: MeteorAppStyle.colorTitulo),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 300,
+                              child: FutureBuilder<ElTiempoResponse>(
+                                  future: items2,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return _elTiempoItem(snapshot.data!);
+                                    } else if (snapshot.hasError) {
+                                      return Text('${snapshot.error}');
+                                    }
+                                    return const CircularProgressIndicator();
+                                  }),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]),
+                )
+              ],
+            ),
           ),
         ]),
       ),
@@ -126,7 +184,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
     }
   }
 
-  Widget _elTiempoList(List<ElTiempoResponse> elTiempoList) {
+  /*Widget _elTiempoList(List<ElTiempoResponse> elTiempoList) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       itemCount: elTiempoList.length,
@@ -134,11 +192,12 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
         return _elTiempoItem(elTiempoList.elementAt(index), index);
       },
     );
-  }
+  }*/
 
   Widget _elTiempoItem(ElTiempoResponse elTiempoResponse, int index) {
     return Container(
       margin: const EdgeInsets.only(right: 20),
+      child: Text(elTiempoResponse.coord.toString()),
     );
   }
 
@@ -180,25 +239,26 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                         date.hour.toString() + ':' + date.minute.toString() + date.second.toString(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.bold),
+                        style: MeteorAppStyle.styloHoras
                       )),
                 ),
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Image.asset(
-                      'assets/icons/${hourly.weather.first.icon}.png',
-                      width: 30,
-                      fit: BoxFit.fill,
-                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top:15.0, bottom: 15.0),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        'assets/icons/${hourly.weather.first.icon}.png',
+                        width: 30,
+                        fit: BoxFit.fill,
+                      )),
+                ),
                 Container(
                   margin: const EdgeInsets.only(left: 5, top: 5),
                   child: Text(
                     hourly.temp.toInt().toString()+ 'º',
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        fontSize: 15, fontWeight: FontWeight.bold),
+                    style: MeteorAppStyle.styloTempHoras
                   ),
                 ),
                 
