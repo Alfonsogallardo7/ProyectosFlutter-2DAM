@@ -16,7 +16,7 @@ class PrediccionTierraPrincipal extends StatefulWidget {
 }
 
 class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
-  late Future<PorHorasResponse> items;
+  late Future<List<Hourly>> items;
 
   @override
   void initState() {
@@ -92,7 +92,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                           ),
                           SizedBox(
                             height: 300,
-                            child: FutureBuilder<PorHorasResponse>(
+                            child: FutureBuilder<List<Hourly>>(
                                 future: items,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
@@ -142,71 +142,66 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
     );
   }
 
-  Future<PorHorasResponse> fetchPorHoras() async {
+  Future<List<Hourly>> fetchPorHoras() async {
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=37.3826&lon=-5.99629&exclude=minutely,daily&appid=f597bdebe1ce3e95e4597d0e583b2a32'));
+        'https://api.openweathermap.org/data/2.5/onecall?lat=37.3826&lon=-5.99629&exclude=minutely,daily&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric'));
     if (response.statusCode == 200) {
-      return PorHorasResponse.fromJson(jsonDecode(response.body));
+      return PorHorasResponse.fromJson(jsonDecode(response.body)).hourly;
     } else {
-      throw Exception('Failed to load planets');
+      throw Exception('Failed to load weather');
     }
   }
 
-  Widget _upPorHorasList(List<PorHorasResponse> porHorasList) {
+  Widget _upPorHorasList(List<Hourly> hourlyList) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: porHorasList.length,
+      itemCount: hourlyList.length,
       itemBuilder: (context, index) {
-        return _porHorasItem(porHorasList.elementAt(index), index);
+        return _porHorasItem(hourlyList.elementAt(index), index);
       },
     );
   }
 
-  Widget _porHorasItem(PorHorasResponse porHorasResponse, int index) {
+  Widget _porHorasItem(Hourly hourly, int index) {
+    var date = DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000);
     return Container(
       margin: const EdgeInsets.only(right: 20),
       child: SizedBox(
           width: 115,
           height: 100,
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                /*ClipRRect(
+                Padding(
+                  padding: const EdgeInsets.only(top:10.0),
+                  child: Container(
+                      margin: const EdgeInsets.only(left: 5),
+                      child: Text(
+                        date.hour.toString() + ':' + date.minute.toString() + date.second.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.bold),
+                      )),
+                ),
+                ClipRRect(
                     borderRadius: BorderRadius.circular(15),
-                    child: Image.network(
-                      'https://image.tmdb.org/t/p/w200${films.posterPath}',
-                      width: 115,
+                    child: Image.asset(
+                      'assets/icons/${hourly.weather.first.icon}.png',
+                      width: 30,
                       fit: BoxFit.fill,
-                    )),*/
+                    )),
                 Container(
                   margin: const EdgeInsets.only(left: 5, top: 5),
                   child: Text(
-                    porHorasResponse.name,
+                    hourly.temp.toInt().toString()+ 'º',
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                         fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                    margin: const EdgeInsets.only(left: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 20,
-                        ),
-                        Text(
-                          porHorasResponse.dt.toString(),
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ))
+                
               ])),
     );
   }

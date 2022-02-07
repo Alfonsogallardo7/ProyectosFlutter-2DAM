@@ -70,6 +70,8 @@ flutter:
     - assets/icons/globe_tapped.svg
     - assets/icons/marte_tapped.svg
     - assets/icons/lista_tapped.svg
+    - assets/icons/01d.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
