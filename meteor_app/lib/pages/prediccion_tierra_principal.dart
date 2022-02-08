@@ -10,6 +10,7 @@ import 'package:meteor_app/pages/eltiempo_details.dart';
 import 'package:meteor_app/styles.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class PrediccionTierraPrincipal extends StatefulWidget {
   const PrediccionTierraPrincipal({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                           style: MeteorAppStyle.styloTempMaxyMin),
                     ),*/
                     SizedBox(
-                      height: 220,
+                      height: 240,
                       child: FutureBuilder<ElTiempoResponse>(
                           future: items2,
                           builder: (context, snapshot) {
@@ -80,7 +81,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                           }),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
+                      padding: const EdgeInsets.only(top: 30.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: MeteorAppStyle.colorAzul.withOpacity(0.8),
@@ -336,41 +337,47 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
       margin: const EdgeInsets.only(right: 7),
       child: SizedBox(
           width: 350,
-          height: 100,
+          height: 80,
           child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Text(week /*+ ' ' +date.day.toString()*/,
+                  child: Text(week + ' ' + date.day.toString(),
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
                       style: MeteorAppStyle.styloHoras),
                 ),
-                Column(
-                  children: [
-                    ClipRRect(
-                        child: Image.asset(
-                      'assets/icons/${daily.weather.first.icon}.png',
-                      width: 30,
-                      fit: BoxFit.fill,
-                    )),
-                  ],
-                ),
                 Container(
-                  child: Text(daily.temp.min.toInt().toString() + 'º',
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style: MeteorAppStyle.styloTempHoras),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: Text(daily.temp.max.toInt().toString() + 'º',
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                      style: MeteorAppStyle.styloTempHoras),
-                ),
+                    margin: const EdgeInsets.only(right: 20),
+                    width: 210,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ClipRRect(
+                            child: Image.asset(
+                          'assets/icons/${daily.weather.first.icon}.png',
+                          width: 30,
+                        )),
+                        Text(daily.temp.min.toInt().toString() + 'º',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                            style: MeteorAppStyle.styloTempHoras),
+                        LinearPercentIndicator(
+                          width: daily.temp.max*2,
+                          lineHeight: 10.0,
+                          percent: daily.temp.min.toDouble()/100,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          backgroundColor: Colors.grey,
+                          progressColor: Colors.blue,
+                        ),
+                        Text(daily.temp.max.toInt().toString() + 'º',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                            style: MeteorAppStyle.styloTempHoras),
+                      ],
+                    ))
               ])),
     );
   }

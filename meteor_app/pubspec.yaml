@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   intl: ^0.17.0
+  percent_indicator: ^3.4.0
 
 
 dev_dependencies:
