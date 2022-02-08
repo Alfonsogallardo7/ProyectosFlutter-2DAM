@@ -2,10 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:meteor_app/models/eltiempo_horas_response.dart';
 import 'package:meteor_app/models/eltiempo_response.dart';
+import 'package:meteor_app/models/eltiempo_sietedays_response.dart';
+import 'package:meteor_app/pages/eltiempo_details.dart';
 import 'package:meteor_app/styles.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/date_symbol_data_local.dart';
 
 class PrediccionTierraPrincipal extends StatefulWidget {
   const PrediccionTierraPrincipal({Key? key}) : super(key: key);
@@ -18,11 +22,13 @@ class PrediccionTierraPrincipal extends StatefulWidget {
 class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   late Future<List<Hourly>> items;
   late Future<ElTiempoResponse> items2;
+  late Future<List<Daily>> items3;
 
   @override
   void initState() {
     items = fetchPorHoras();
     items2 = fetchTiempo();
+    items3 = fetchPorSieteDias();
     super.initState();
   }
 
@@ -47,7 +53,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                 Container(
                   padding: const EdgeInsets.only(top: 85),
                   child: Column(children: <Widget>[
-                    Text('Sevilla', style: MeteorAppStyle.styloCiudad),
+                    /*Text('Sevilla', style: MeteorAppStyle.styloCiudad),
                     Text('20º', style: MeteorAppStyle.styloTemp),
                     Text('Mayormente Soleado',
                         style: MeteorAppStyle.styloDescripcion),
@@ -55,6 +61,23 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                       padding: const EdgeInsets.only(top: 3.0),
                       child: Text('Max:20º Min:15º',
                           style: MeteorAppStyle.styloTempMaxyMin),
+                    ),*/
+                    SizedBox(
+                      height: 220,
+                      child: FutureBuilder<ElTiempoResponse>(
+                          future: items2,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return _elTiempoItem(snapshot.data!);
+                            } else if (snapshot.hasError) {
+                              return Text('${snapshot.error}');
+                            }
+                            return const Padding(
+                                padding: EdgeInsets.all(90),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ));
+                          }),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 50.0),
@@ -84,8 +107,8 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, right: 10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
                               child: Container(
                                 height: 1,
                                 width: 350,
@@ -94,7 +117,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                               ),
                             ),
                             SizedBox(
-                              height: 300,
+                              height: 120,
                               child: FutureBuilder<List<Hourly>>(
                                   future: items,
                                   builder: (context, snapshot) {
@@ -103,22 +126,26 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                                     } else if (snapshot.hasError) {
                                       return Text('${snapshot.error}');
                                     }
-                                    return const CircularProgressIndicator();
+                                    return const Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ));
                                   }),
                             ),
                           ],
                         ),
                       ),
                     ),
-                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 15),
                       child: Container(
                         decoration: BoxDecoration(
                           color: MeteorAppStyle.colorAzul.withOpacity(0.8),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         width: 350,
-                        height: 180,
+                        height: 480,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -132,14 +159,14 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                                     size: 15,
                                     color: MeteorAppStyle.colorTitulo,
                                   ),
-                                  Text(' 10-DAY FORECAST',
+                                  Text(' 7-DAY FORECAST',
                                       style: MeteorAppStyle.styloMiniTittle),
                                 ],
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, right: 10.0),
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 10.0),
                               child: Container(
                                 height: 1,
                                 width: 350,
@@ -148,16 +175,20 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                               ),
                             ),
                             SizedBox(
-                              height: 300,
-                              child: FutureBuilder<ElTiempoResponse>(
-                                  future: items2,
+                              height: 420,
+                              child: FutureBuilder<List<Daily>>(
+                                  future: items3,
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
-                                      return _elTiempoItem(snapshot.data!);
+                                      return _porSieteDiasList(snapshot.data!);
                                     } else if (snapshot.hasError) {
                                       return Text('${snapshot.error}');
                                     }
-                                    return const CircularProgressIndicator();
+                                    return const Padding(
+                                        padding: EdgeInsets.all(90),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ));
                                   }),
                             ),
                           ],
@@ -176,7 +207,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
 
   Future<ElTiempoResponse> fetchTiempo() async {
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=f597bdebe1ce3e95e4597d0e583b2a32&lang=es'));
+        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric&lang=es'));
     if (response.statusCode == 200) {
       return ElTiempoResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -184,20 +215,33 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
     }
   }
 
-  /*Widget _elTiempoList(List<ElTiempoResponse> elTiempoList) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: elTiempoList.length,
-      itemBuilder: (context, index) {
-        return _elTiempoItem(elTiempoList.elementAt(index), index);
-      },
-    );
-  }*/
+  Widget _elTiempoItem(ElTiempoResponse elTiempoResponse) {
+    var date = DateTime.fromMillisecondsSinceEpoch(elTiempoResponse.dt);
+    initializeDateFormatting();
+    var week = DateFormat('EEE', 'es_ES').format(date);
 
-  Widget _elTiempoItem(ElTiempoResponse elTiempoResponse, int index) {
-    return Container(
-      margin: const EdgeInsets.only(right: 20),
-      child: Text(elTiempoResponse.coord.toString()),
+    return InkWell(
+      child: Container(
+        child: Column(
+          children: <Widget>[
+            Text(elTiempoResponse.name, style: MeteorAppStyle.styloCiudad),
+            Text('${elTiempoResponse.main.temp.toInt().toString()}º',
+                style: MeteorAppStyle.styloTemp),
+            Text(elTiempoResponse.weather.first.description,
+                style: MeteorAppStyle.styloDescripcion),
+            Padding(
+              padding: const EdgeInsets.only(top: 3.0),
+              child: Text(
+                  'Max: ${elTiempoResponse.main.tempMax.toInt().toString()} Min: ${elTiempoResponse.main.tempMin.toInt().toString()}',
+                  style: MeteorAppStyle.styloTempMaxyMin),
+            ),
+          ],
+        ),
+      ),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ElTiempoDetails()));
+      },
     );
   }
 
@@ -216,15 +260,15 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
       scrollDirection: Axis.horizontal,
       itemCount: hourlyList.length,
       itemBuilder: (context, index) {
-        return _porHorasItem(hourlyList.elementAt(index), index);
+        return _porHorasItem(hourlyList.elementAt(index));
       },
     );
   }
 
-  Widget _porHorasItem(Hourly hourly, int index) {
+  Widget _porHorasItem(Hourly hourly) {
     var date = DateTime.fromMillisecondsSinceEpoch(hourly.dt * 1000);
     return Container(
-      margin: const EdgeInsets.only(right: 20),
+      margin: const EdgeInsets.only(right: 7),
       child: SizedBox(
           width: 100,
           height: 100,
@@ -232,18 +276,18 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top:10.0),
-                  child: Container(
-                      margin: const EdgeInsets.only(left: 5),
-                      child: Text(
-                        date.hour.toString() + ':' + date.minute.toString() + date.second.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: MeteorAppStyle.styloHoras
-                      )),
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                      date.hour.toString() +
+                          ':' +
+                          date.minute.toString() +
+                          date.second.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: MeteorAppStyle.styloHoras),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:15.0, bottom: 15.0),
+                  padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Image.asset(
@@ -253,15 +297,80 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
                       )),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 5, top: 5),
-                  child: Text(
-                    hourly.temp.toInt().toString()+ 'º',
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.start,
-                    style: MeteorAppStyle.styloTempHoras
-                  ),
+                  margin: const EdgeInsets.only(top: 5),
+                  child: Text(hourly.temp.toInt().toString() + 'º',
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      style: MeteorAppStyle.styloTempHoras),
                 ),
-                
+              ])),
+    );
+  }
+
+  Future<List<Daily>> fetchPorSieteDias() async {
+    final response = await http.get(Uri.parse(
+        'https://api.openweathermap.org/data/2.5/onecall?lat=37.3826&lon=-5.99629&exclude=minutely,current,hourly,alerts&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric&lang=es'));
+    if (response.statusCode == 200) {
+      return ElTiempoSieteDaysResponse.fromJson(jsonDecode(response.body))
+          .daily;
+    } else {
+      throw Exception('Failed to load weather');
+    }
+  }
+
+  Widget _porSieteDiasList(List<Daily> dailyList) {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: dailyList.length,
+      itemBuilder: (context, index) {
+        return _porSieteDiasItem(dailyList.elementAt(index));
+      },
+    );
+  }
+
+  Widget _porSieteDiasItem(Daily daily) {
+    var date = DateTime.fromMillisecondsSinceEpoch(daily.dt * 1000);
+    initializeDateFormatting();
+    var week = DateFormat('E', 'es_ES').format(date).toUpperCase();
+    return Container(
+      margin: const EdgeInsets.only(right: 7),
+      child: SizedBox(
+          width: 350,
+          height: 100,
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Text(week /*+ ' ' +date.day.toString()*/,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: MeteorAppStyle.styloHoras),
+                ),
+                Column(
+                  children: [
+                    ClipRRect(
+                        child: Image.asset(
+                      'assets/icons/${daily.weather.first.icon}.png',
+                      width: 30,
+                      fit: BoxFit.fill,
+                    )),
+                  ],
+                ),
+                Container(
+                  child: Text(daily.temp.min.toInt().toString() + 'º',
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      style: MeteorAppStyle.styloTempHoras),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: Text(daily.temp.max.toInt().toString() + 'º',
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
+                      style: MeteorAppStyle.styloTempHoras),
+                ),
               ])),
     );
   }
