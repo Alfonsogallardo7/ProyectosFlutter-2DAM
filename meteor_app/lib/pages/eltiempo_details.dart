@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:meteor_app/styles.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class ElTiempoDetails extends StatefulWidget {
   const ElTiempoDetails({Key? key}) : super(key: key);
@@ -87,9 +88,9 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
   Widget _elTiempoItem(ElTiempoResponse elTiempoResponse) {
     var date = DateTime.fromMillisecondsSinceEpoch(elTiempoResponse.dt);
     var puestaSol =
-        DateTime.fromMillisecondsSinceEpoch(elTiempoResponse.sys.sunset);
-    var amanecer =
-        DateTime.fromMillisecondsSinceEpoch(elTiempoResponse.sys.sunrise);
+        DateTime.fromMillisecondsSinceEpoch(elTiempoResponse.sys.sunset * 1000);
+    var amanecer = DateTime.fromMillisecondsSinceEpoch(
+        elTiempoResponse.sys.sunrise * 1000);
 
     initializeDateFormatting();
     var week = DateFormat('EEE', 'es_ES').format(date);
@@ -115,8 +116,8 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                       color: MeteorAppStyle.colorAzul.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    width: 170,
-                    height: 200,
+                    width: 160,
+                    height: 180,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -146,10 +147,52 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: EdgeInsets.only(top: 30.0),
                             child: Column(
-                              children: [Icon(CupertinoIcons.thermometer_sun) ,Text('${elTiempoResponse.main.tempMax.toInt()}º'),
-                              Text('${elTiempoResponse.main.tempMin.toInt()}º')],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: const <Widget>[
+                                        Icon(
+                                          CupertinoIcons.thermometer_sun,
+                                          color: Colors.white,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 25.0),
+                                          child: Icon(
+                                            CupertinoIcons
+                                                .thermometer_snowflake,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        Text(
+                                          ' ${elTiempoResponse.main.tempMax.toInt()}º',
+                                          style: MeteorAppStyle.styloTempHoras,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 25.0),
+                                          child: Text(
+                                            ' ${elTiempoResponse.main.tempMin.toInt()}º',
+                                            style:
+                                                MeteorAppStyle.styloTempHoras,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
                             )),
                       ],
                     ),
@@ -163,8 +206,8 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                       color: MeteorAppStyle.colorAzul.withOpacity(0.8),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    width: 170,
-                    height: 200,
+                    width: 160,
+                    height: 180,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -174,7 +217,7 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                           child: Row(
                             children: [
                               Icon(
-                                CupertinoIcons.sun_max,
+                                CupertinoIcons.sun_max_fill,
                                 size: 15,
                                 color: MeteorAppStyle.colorTitulo,
                               ),
@@ -194,16 +237,191 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                            padding: EdgeInsets.only(top: 30.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: const <Widget>[
+                                        Icon(
+                                          CupertinoIcons.sunrise_fill,
+                                          color: Colors.white,
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 25.0),
+                                          child: Icon(
+                                            CupertinoIcons.sunset_fill,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        Text(
+                                          '${amanecer.hour} : ${amanecer.minute}',
+                                          style: MeteorAppStyle.styloTempHoras,
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 25.0),
+                                          child: Text(
+                                            '${puestaSol.hour}: ${puestaSol.minute}',
+                                            style:
+                                                MeteorAppStyle.styloTempHoras,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 30.0, bottom: 15, left: 15),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: 160,
+                    height: 170,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, top: 10.0, bottom: 10),
+                          child: Row(
                             children: [
-                              Text(
-                                  '${puestaSol.hour}: ${puestaSol.minute}: ${puestaSol.second}'),
-                              Text(
-                                  '${amanecer.hour} : ${amanecer.minute}: ${puestaSol.second}')
+                              Icon(
+                                CupertinoIcons.drop_fill,
+                                size: 15,
+                                color: MeteorAppStyle.colorTitulo,
+                              ),
+                              Text(' HUMEDAD',
+                                  style: MeteorAppStyle.styloMiniTittle),
                             ],
                           ),
-                        )
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Container(
+                            height: 1,
+                            width: 350,
+                            decoration:
+                                BoxDecoration(color: MeteorAppStyle.colorTitulo),
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(top: 30.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    CircularPercentIndicator(
+                                      radius: 70.0,
+                                      lineWidth: 2.0,
+                                      animation: true,
+                                      percent: elTiempoResponse.main.humidity
+                                              .toDouble() /
+                                          100,
+                                      center: Text(
+                                        '${elTiempoResponse.main.humidity}%',
+                                        style: MeteorAppStyle.styloCircularPercent,
+                                      ),
+                                      circularStrokeCap: CircularStrokeCap.round,
+                                      progressColor: Colors.white,
+                                      backgroundColor: MeteorAppStyle.colorTitulo,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 30.0, bottom: 15, right: 15,),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    width: 160,
+                    height: 170,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10.0, top: 10.0, bottom: 10),
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.drop_fill,
+                                size: 15,
+                                color: MeteorAppStyle.colorTitulo,
+                              ),
+                              Text(' HUMEDAD',
+                                  style: MeteorAppStyle.styloMiniTittle),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                          child: Container(
+                            height: 1,
+                            width: 350,
+                            decoration:
+                                BoxDecoration(color: MeteorAppStyle.colorTitulo),
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(top: 30.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    CircularPercentIndicator(
+                                      radius: 70.0,
+                                      lineWidth: 2.0,
+                                      animation: true,
+                                      percent: elTiempoResponse.main.humidity
+                                              .toDouble() /
+                                          100,
+                                      center: Text(
+                                        '${elTiempoResponse.main.humidity}%',
+                                        style: MeteorAppStyle.styloCircularPercent,
+                                      ),
+                                      circularStrokeCap: CircularStrokeCap.round,
+                                      progressColor: Colors.white,
+                                      backgroundColor: MeteorAppStyle.colorTitulo,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )),
                       ],
                     ),
                   ),

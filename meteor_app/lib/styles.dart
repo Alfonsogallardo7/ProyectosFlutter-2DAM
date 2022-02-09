@@ -34,4 +34,6 @@ static TextStyle styloTempHoras = TextStyle(fontSize: MeteorAppStyle.textoTempHo
 
 static TextStyle styloHoras = TextStyle(fontSize: MeteorAppStyle.textoHoras, color: Colors.white);
 
+static TextStyle styloCircularPercent = TextStyle(fontSize: MeteorAppStyle.textoMiniTittle, color: Colors.white);
+
 }
