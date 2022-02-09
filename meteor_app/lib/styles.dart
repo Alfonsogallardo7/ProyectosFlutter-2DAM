@@ -24,6 +24,8 @@ static TextStyle styloCiudad = TextStyle(fontSize: MeteorAppStyle.textoCuidad, c
 
 static TextStyle styloTemp = TextStyle(fontSize: MeteorAppStyle.textoTemperatura, color: Colors.white, fontWeight: FontWeight.w200);
 
+static TextStyle styloTempMin = TextStyle(fontSize: MeteorAppStyle.textoTemperatura, color: MeteorAppStyle.colorTitulo, fontWeight: FontWeight.w200);
+
 static TextStyle styloDescripcion = TextStyle(fontSize: MeteorAppStyle.textoDescripcion, color: Colors.white);
 
 static TextStyle styloTempMaxyMin = TextStyle(fontSize: MeteorAppStyle.textoMaxyMin, color: Colors.white);

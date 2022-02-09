@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meteor_app/pages/prediccion_tierra_principal.dart';
+import 'package:meteor_app/pages/seleccionar_mapa.dart';
 import 'package:meteor_app/styles.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,8 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     PrediccionTierraPrincipal(),
     Text('data'),
-    Text('data'),
+    SeleccionarMapar(),
+
   ];
 
   void _onItemTapped(int index) {
