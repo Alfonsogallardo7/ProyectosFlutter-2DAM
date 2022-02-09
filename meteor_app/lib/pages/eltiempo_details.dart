@@ -311,11 +311,11 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                           child: Row(
                             children: [
                               Icon(
-                                CupertinoIcons.drop_fill,
+                                CupertinoIcons.wind,
                                 size: 15,
                                 color: MeteorAppStyle.colorTitulo,
                               ),
-                              Text(' HUMEDAD',
+                              Text(' VIENTO',
                                   style: MeteorAppStyle.styloMiniTittle),
                             ],
                           ),
@@ -330,27 +330,12 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                           ),
                         ),
                         Padding(
-                            padding: EdgeInsets.only(top: 30.0),
+                            padding: EdgeInsets.only(top: 45.0),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Column(
+                                Column( mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    CircularPercentIndicator(
-                                      radius: 70.0,
-                                      lineWidth: 2.0,
-                                      animation: true,
-                                      percent: elTiempoResponse.main.humidity
-                                              .toDouble() /
-                                          100,
-                                      center: Text(
-                                        '${elTiempoResponse.main.humidity}%',
-                                        style: MeteorAppStyle.styloCircularPercent,
-                                      ),
-                                      circularStrokeCap: CircularStrokeCap.round,
-                                      progressColor: Colors.white,
-                                      backgroundColor: MeteorAppStyle.colorTitulo,
-                                    ),
+                                    Text('${elTiempoResponse.wind.speed} m/s', style: MeteorAppStyle.styloTempHoras,)
                                   ],
                                 )
                               ],
