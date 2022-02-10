@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meteor_app/styles.dart';
+import 'package:meteor_app/utils/constanst.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SeleccionarMapar extends StatefulWidget {
   const SeleccionarMapar({Key? key}) : super(key: key);
@@ -29,7 +31,13 @@ class _SeleccionarMaparState extends State<SeleccionarMapar> {
               Center(
                 child: GoogleMap(
                   initialCameraPosition: _initialCameraPosition,
-                  onTap: (position) {
+                  onTap: (LatLng position) async {
+                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setDouble('lat', position.latitude);
+                  prefs.setDouble('lng', position.longitude);
+                  setState(() {
+                    //coordenadas = position;
+                  });
                     print(position);
                   },
                 ),

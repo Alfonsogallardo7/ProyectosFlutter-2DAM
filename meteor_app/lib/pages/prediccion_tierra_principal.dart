@@ -10,7 +10,9 @@ import 'package:meteor_app/pages/eltiempo_details.dart';
 import 'package:meteor_app/styles.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:meteor_app/utils/constanst.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrediccionTierraPrincipal extends StatefulWidget {
   const PrediccionTierraPrincipal({Key? key}) : super(key: key);
@@ -208,7 +210,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
 
   Future<ElTiempoResponse> fetchTiempo() async {
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric&lang=es'));
+        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=${ApiId}&units=metric&lang=es'));
     if (response.statusCode == 200) {
       return ElTiempoResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -247,8 +249,11 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   }
 
   Future<List<Hourly>> fetchPorHoras() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    lat = prefs.getDouble('lat');
+      lng = prefs.getDouble('lng');
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=37.3826&lon=-5.99629&exclude=minutely,daily&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric'));
+        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}lon=${lng}&exclude=minutely,daily&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric'));
     if (response.statusCode == 200) {
       return PorHorasResponse.fromJson(jsonDecode(response.body)).hourly;
     } else {
