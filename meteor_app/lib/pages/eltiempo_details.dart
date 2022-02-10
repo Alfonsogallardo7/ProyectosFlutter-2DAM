@@ -41,20 +41,6 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                         ),
                         fit: BoxFit.cover)),
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0, left: 10),
-                child: InkWell(
-                  child: Icon(
-                    CupertinoIcons.back,
-                    color: MeteorAppStyle.colorTitulo,
-                    size: 30,
-                  ),
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                  },
-                ),
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: FutureBuilder<ElTiempoResponse>(
@@ -95,465 +81,500 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
     initializeDateFormatting();
     var week = DateFormat('EEE', 'es_ES').format(date);
 
-    return Center(
-      child: Container(
-        padding: EdgeInsets.only(top: 60),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(elTiempoResponse.name, style: MeteorAppStyle.styloCiudad),
-            Text(
-                '${elTiempoResponse.main.temp.toInt().toString()}º | ${elTiempoResponse.weather.first.description}',
-                style: MeteorAppStyle.styloTempHoras),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 30.0, bottom: 15, left: 15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.only(top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 60.0, left: 10),
+                    child: InkWell(
+                      child: Icon(
+                        CupertinoIcons.back,
+                        color: MeteorAppStyle.colorTitulo,
+                        size: 30,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    height: 180,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50.0, left: 75),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.thermometer,
-                                size: 15,
-                                color: MeteorAppStyle.colorTitulo,
-                              ),
-                              Text(' TEMPERATURA',
-                                  style: MeteorAppStyle.styloMiniTittle),
-                            ],
+                      children: [
+                        Text(elTiempoResponse.name,
+                            style: MeteorAppStyle.styloCiudad),
+                        Text(
+                            '${elTiempoResponse.main.temp.toInt().toString()}º | ${elTiempoResponse.weather.first.description}',
+                            style: MeteorAppStyle.styloTempHoras),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30.0, bottom: 15, left: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.3,
+                      height: 180,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.thermometer,
+                                  size: 15,
+                                  color: MeteorAppStyle.colorTitulo,
+                                ),
+                                Text(' TEMPERATURA',
+                                    style: MeteorAppStyle.styloMiniTittle),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
-                            height: 1,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: MeteorAppStyle.colorTitulo),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Container(
+                              height: 1,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  color: MeteorAppStyle.colorTitulo),
+                            ),
                           ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 30.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: const <Widget>[
-                                        Icon(
-                                          CupertinoIcons.thermometer_sun,
-                                          color: Colors.white,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 25.0),
-                                          child: Icon(
-                                            CupertinoIcons
-                                                .thermometer_snowflake,
+                          Padding(
+                              padding: EdgeInsets.only(top: 30.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const <Widget>[
+                                          Icon(
+                                            CupertinoIcons.thermometer_sun,
                                             color: Colors.white,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        Text(
-                                          ' ${elTiempoResponse.main.tempMax.toInt()}º',
-                                          style: MeteorAppStyle.styloTempHoras,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 25.0),
-                                          child: Text(
-                                            ' ${elTiempoResponse.main.tempMin.toInt()}º',
-                                            style:
-                                                MeteorAppStyle.styloTempHoras,
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 25.0),
+                                            child: Icon(
+                                              CupertinoIcons
+                                                  .thermometer_snowflake,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            )),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 30.0, bottom: 15, right: 15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    //width: 160,
-                    height: 180,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.sun_max_fill,
-                                size: 15,
-                                color: MeteorAppStyle.colorTitulo,
-                              ),
-                              Text(' SOL',
-                                  style: MeteorAppStyle.styloMiniTittle),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
-                            height: 1,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: MeteorAppStyle.colorTitulo),
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 30.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: const <Widget>[
-                                        Icon(
-                                          CupertinoIcons.sunrise_fill,
-                                          color: Colors.white,
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(top: 25.0),
-                                          child: Icon(
-                                            CupertinoIcons.sunset_fill,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        Text(
-                                          '${amanecer.hour} : ${amanecer.minute}',
-                                          style: MeteorAppStyle.styloTempHoras,
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 25.0),
-                                          child: Text(
-                                            '${puestaSol.hour}: ${puestaSol.minute}',
-                                            style:
-                                                MeteorAppStyle.styloTempHoras,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            )),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 30.0, bottom: 15, left: 15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: MediaQuery.of(context).size.width / 2.3,
-
-                    //width: 160,
-                    height: 170,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.wind,
-                                size: 15,
-                                color: MeteorAppStyle.colorTitulo,
-                              ),
-                              Text(' VIENTO',
-                                  style: MeteorAppStyle.styloMiniTittle),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
-                            height: 1,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: MeteorAppStyle.colorTitulo),
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 45.0),
-                            child: Column(
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      '${elTiempoResponse.wind.speed} m/s',
-                                      style: MeteorAppStyle.styloTempHoras,
-                                    )
-                                  ],
-                                )
-                              ],
-                            )),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 30.0,
-                    bottom: 15,
-                    right: 15,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    //width: 160,
-                    height: 170,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.drop_fill,
-                                size: 15,
-                                color: MeteorAppStyle.colorTitulo,
-                              ),
-                              Text(' HUMEDAD',
-                                  style: MeteorAppStyle.styloMiniTittle),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
-                            height: 1,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: MeteorAppStyle.colorTitulo),
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 30.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    CircularPercentIndicator(
-                                      radius: 70.0,
-                                      lineWidth: 2.0,
-                                      animation: true,
-                                      percent: elTiempoResponse.main.humidity
-                                              .toDouble() /
-                                          100,
-                                      center: Text(
-                                        '${elTiempoResponse.main.humidity}%',
-                                        style:
-                                            MeteorAppStyle.styloCircularPercent,
+                                        ],
                                       ),
-                                      circularStrokeCap:
-                                          CircularStrokeCap.round,
-                                      progressColor: Colors.white,
-                                      backgroundColor:
-                                          MeteorAppStyle.colorTitulo,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )),
-                      ],
+                                      Column(
+                                        children: <Widget>[
+                                          Text(
+                                            ' ${elTiempoResponse.main.tempMax.toInt()}º',
+                                            style:
+                                                MeteorAppStyle.styloTempHoras,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 25.0),
+                                            child: Text(
+                                              ' ${elTiempoResponse.main.tempMin.toInt()}º',
+                                              style:
+                                                  MeteorAppStyle.styloTempHoras,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 30.0, bottom: 15, left: 15),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30.0, bottom: 15, right: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.3,
+                      //width: 160,
+                      height: 180,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.sun_max_fill,
+                                  size: 15,
+                                  color: MeteorAppStyle.colorTitulo,
+                                ),
+                                Text(' SOL',
+                                    style: MeteorAppStyle.styloMiniTittle),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Container(
+                              height: 1,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  color: MeteorAppStyle.colorTitulo),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: 30.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: const <Widget>[
+                                          Icon(
+                                            CupertinoIcons.sunrise_fill,
+                                            color: Colors.white,
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 25.0),
+                                            child: Icon(
+                                              CupertinoIcons.sunset_fill,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        children: <Widget>[
+                                          Text(
+                                            '${amanecer.hour} : ${amanecer.minute}',
+                                            style:
+                                                MeteorAppStyle.styloTempHoras,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 25.0),
+                                            child: Text(
+                                              '${puestaSol.hour}: ${puestaSol.minute}',
+                                              style:
+                                                  MeteorAppStyle.styloTempHoras,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
                     ),
-                    width: MediaQuery.of(context).size.width / 2.3,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30.0, bottom: 15, left: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.3,
 
-                    //width: 160,
-                    height: 170,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.eye_fill,
-                                size: 15,
-                                color: MeteorAppStyle.colorTitulo,
-                              ),
-                              Text(' VISIBILIDAD',
-                                  style: MeteorAppStyle.styloMiniTittle),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
-                            height: 1,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: MeteorAppStyle.colorTitulo),
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 45.0),
-                            child: Column(
-                              children: <Widget>[
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      '${(elTiempoResponse.visibility/1000).toInt()} km',
-                                      style: MeteorAppStyle.styloTempHoras,
-                                    )
-                                  ],
-                                )
+                      //width: 160,
+                      height: 170,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.wind,
+                                  size: 15,
+                                  color: MeteorAppStyle.colorTitulo,
+                                ),
+                                Text(' VIENTO',
+                                    style: MeteorAppStyle.styloMiniTittle),
                               ],
-                            )),
-                      ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Container(
+                              height: 1,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  color: MeteorAppStyle.colorTitulo),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: 45.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        '${elTiempoResponse.wind.speed} m/s',
+                                        style: MeteorAppStyle.styloTempHoras,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 30.0,
-                    bottom: 15,
-                    right: 15,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: MeteorAppStyle.colorAzul.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30.0,
+                      bottom: 15,
+                      right: 15,
                     ),
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    //width: 160,
-                    height: 170,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10.0, top: 10.0, bottom: 10),
-                          child: Row(
-                            children: [
-                              Icon(
-                                CupertinoIcons.gauge,
-                                size: 15,
-                                color: MeteorAppStyle.colorTitulo,
-                              ),
-                              Text(' PRESIÓN',
-                                  style: MeteorAppStyle.styloMiniTittle),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
-                            height: 1,
-                            width: 350,
-                            decoration: BoxDecoration(
-                                color: MeteorAppStyle.colorTitulo),
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 45.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Column(
-                                  children: <Widget>[
-                                    Text('${elTiempoResponse.main.pressure} hPa', style: MeteorAppStyle.styloTempHoras,)
-                                  ],
-                                )
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.3,
+                      //width: 160,
+                      height: 170,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.drop_fill,
+                                  size: 15,
+                                  color: MeteorAppStyle.colorTitulo,
+                                ),
+                                Text(' HUMEDAD',
+                                    style: MeteorAppStyle.styloMiniTittle),
                               ],
-                            )),
-                      ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Container(
+                              height: 1,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  color: MeteorAppStyle.colorTitulo),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: 30.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Column(
+                                    children: <Widget>[
+                                      CircularPercentIndicator(
+                                        radius: 70.0,
+                                        lineWidth: 2.0,
+                                        animation: true,
+                                        percent: elTiempoResponse.main.humidity
+                                                .toDouble() /
+                                            100,
+                                        center: Text(
+                                          '${elTiempoResponse.main.humidity}%',
+                                          style: MeteorAppStyle
+                                              .styloCircularPercent,
+                                        ),
+                                        circularStrokeCap:
+                                            CircularStrokeCap.round,
+                                        progressColor: Colors.white,
+                                        backgroundColor:
+                                            MeteorAppStyle.colorTitulo,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 30.0, bottom: 15, left: 15),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.3,
+
+                      //width: 160,
+                      height: 170,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.eye_fill,
+                                  size: 15,
+                                  color: MeteorAppStyle.colorTitulo,
+                                ),
+                                Text(' VISIBILIDAD',
+                                    style: MeteorAppStyle.styloMiniTittle),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Container(
+                              height: 1,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  color: MeteorAppStyle.colorTitulo),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: 45.0),
+                              child: Column(
+                                children: <Widget>[
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        '${(elTiempoResponse.visibility / 1000).toInt()} km',
+                                        style: MeteorAppStyle.styloTempHoras,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30.0,
+                      bottom: 15,
+                      right: 15,
+                    ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: MeteorAppStyle.colorAzul.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      width: MediaQuery.of(context).size.width / 2.3,
+                      //width: 160,
+                      height: 170,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10.0, top: 10.0, bottom: 10),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  CupertinoIcons.gauge,
+                                  size: 15,
+                                  color: MeteorAppStyle.colorTitulo,
+                                ),
+                                Text(' PRESIÓN',
+                                    style: MeteorAppStyle.styloMiniTittle),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 10.0, right: 10.0),
+                            child: Container(
+                              height: 1,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  color: MeteorAppStyle.colorTitulo),
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(top: 45.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        '${elTiempoResponse.main.pressure} hPa',
+                                        style: MeteorAppStyle.styloTempHoras,
+                                      )
+                                    ],
+                                  )
+                                ],
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

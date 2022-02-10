@@ -27,17 +27,11 @@ class _SeleccionarMaparState extends State<SeleccionarMapar> {
                         fit: BoxFit.cover)),
               ),
               Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20)),
-                  width: 300,
-                  height: 300,
-                  child: GoogleMap(
-                    initialCameraPosition: _initialCameraPosition,
-                    onTap: (position) {
-                      print(position);
-                    },
-                  ),
+                child: GoogleMap(
+                  initialCameraPosition: _initialCameraPosition,
+                  onTap: (position) {
+                    print(position);
+                  },
                 ),
               )
             ])));
