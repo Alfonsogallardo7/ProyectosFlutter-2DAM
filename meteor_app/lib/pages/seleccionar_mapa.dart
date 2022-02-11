@@ -11,7 +11,7 @@ class SeleccionarMapar extends StatefulWidget {
   _SeleccionarMaparState createState() => _SeleccionarMaparState();
 }
 
-LatLng coordenada = LatLng(37.379647, -6.0069196);
+LatLng coordenada = LatLng(lat!, lng!);
 
 class _SeleccionarMaparState extends State<SeleccionarMapar> {
   final _initialCameraPosition =

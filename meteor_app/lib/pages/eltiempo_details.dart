@@ -9,7 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:meteor_app/styles.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:meteor_app/utils/constanst.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ElTiempoDetails extends StatefulWidget {
   const ElTiempoDetails({Key? key}) : super(key: key);
@@ -62,13 +64,17 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
   }
 
   Future<ElTiempoResponse> fetchTiempo() async {
-    final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric&lang=es'));
-    if (response.statusCode == 200) {
+    return SharedPreferences.getInstance().then((prefs) async {
+      lat = prefs.getDouble('lat');
+      lng = prefs.getDouble('lng');
+      final response = await http.get(Uri.parse(
+          'https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${ApiId}&units=metric&lang=es'));
+       if (response.statusCode == 200) {
       return ElTiempoResponse.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to load weather');
     }
+    });
   }
 
   Widget _elTiempoItem(ElTiempoResponse elTiempoResponse) {
