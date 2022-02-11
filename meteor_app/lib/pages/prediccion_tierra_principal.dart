@@ -225,8 +225,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
       if (response.statusCode == 200) {
         return ElTiempoResponse.fromJson(jsonDecode(response.body));
       } else {
-        throw Exception(
-            'https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${ApiId}&units=metric&lang=es');
+        throw Exception('Seleccione una ciudad');
       }
     });
   }
