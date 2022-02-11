@@ -11,8 +11,14 @@ import 'package:meteor_app/styles.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:meteor_app/utils/constanst.dart';
+import 'package:meteor_app/utils/preferences.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  PreferenceUtils.init();
+  runApp(const PrediccionTierraPrincipal());
+}
 
 class PrediccionTierraPrincipal extends StatefulWidget {
   const PrediccionTierraPrincipal({Key? key}) : super(key: key);
@@ -26,13 +32,15 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   late Future<List<Hourly>> items;
   late Future<ElTiempoResponse> items2;
   late Future<List<Daily>> items3;
+  late double? lat = 37.379647, lng = -6.0069196;
 
   @override
   void initState() {
+    super.initState();
+
     items = fetchPorHoras();
     items2 = fetchTiempo();
     items3 = fetchPorSieteDias();
-    super.initState();
   }
 
   @override
@@ -209,13 +217,18 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   }
 
   Future<ElTiempoResponse> fetchTiempo() async {
-    final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${ApiId}&units=metric&lang=es'));
-    if (response.statusCode == 200) {
-      return ElTiempoResponse.fromJson(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load weather');
-    }
+    return SharedPreferences.getInstance().then((prefs) async {
+      lat = prefs.getDouble('lat');
+      lng = prefs.getDouble('lng');
+      final response = await http.get(Uri.parse(
+          'https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${ApiId}&units=metric&lang=es'));
+      if (response.statusCode == 200) {
+        return ElTiempoResponse.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception(
+            'https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${ApiId}&units=metric&lang=es');
+      }
+    });
   }
 
   Widget _elTiempoItem(ElTiempoResponse elTiempoResponse) {
@@ -249,16 +262,17 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   }
 
   Future<List<Hourly>> fetchPorHoras() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    lat = prefs.getDouble('lat');
+    return SharedPreferences.getInstance().then((prefs) async {
+      lat = prefs.getDouble('lat');
       lng = prefs.getDouble('lng');
-    final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,daily&appid=${ApiId}&units=metric'));
-    if (response.statusCode == 200) {
-      return PorHorasResponse.fromJson(jsonDecode(response.body)).hourly;
-    } else {
-      throw Exception('Failed to load weather');
-    }
+      final response = await http.get(Uri.parse(
+          'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,daily&appid=${ApiId}&units=metric'));
+      if (response.statusCode == 200) {
+        return PorHorasResponse.fromJson(jsonDecode(response.body)).hourly;
+      } else {
+        throw Exception('Failed to load weather');
+      }
+    });
   }
 
   Widget _upPorHorasList(List<Hourly> hourlyList) {
@@ -314,14 +328,18 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
   }
 
   Future<List<Daily>> fetchPorSieteDias() async {
-    final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,current,hourly,alerts&appid=${ApiId}&units=metric&lang=es'));
-    if (response.statusCode == 200) {
-      return ElTiempoSieteDaysResponse.fromJson(jsonDecode(response.body))
-          .daily;
-    } else {
-      throw Exception('Failed to load weather');
-    }
+    return SharedPreferences.getInstance().then((prefs) async {
+      lat = prefs.getDouble('lat');
+      lng = prefs.getDouble('lng');
+      final response = await http.get(Uri.parse(
+          'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,current,hourly,alerts&appid=${ApiId}&units=metric&lang=es'));
+      if (response.statusCode == 200) {
+        return ElTiempoSieteDaysResponse.fromJson(jsonDecode(response.body))
+            .daily;
+      } else {
+        throw Exception('Failed to load weather');
+      }
+    });
   }
 
   Widget _porSieteDiasList(List<Daily> dailyList) {

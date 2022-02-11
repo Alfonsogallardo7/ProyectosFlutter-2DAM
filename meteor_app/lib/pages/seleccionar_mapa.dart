@@ -33,28 +33,29 @@ class _SeleccionarMaparState extends State<SeleccionarMapar> {
               Center(
                 child: GoogleMap(
                   initialCameraPosition: _initialCameraPosition,
-                  markers: <Marker> {
+                  myLocationButtonEnabled: false,
+                  markers: <Marker>{
                     _createMarker(),
                   },
                   onTap: (LatLng position) async {
-                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                  prefs.setDouble('lat', position.latitude);
-                  prefs.setDouble('lng', position.longitude);
-                  setState(() {
-                    coordenada=position;
-                  });
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setDouble('lat', position.latitude);
+                    prefs.setDouble('lng', position.longitude);
+                    setState(() {
+                      coordenada = position;
+                    });
                     print(position);
                   },
                 ),
               )
             ])));
   }
-   Marker _createMarker() {
-   
-      return Marker(
-        markerId: MarkerId("marker_1"),
-        position: coordenada,
-      );
-    
+
+  Marker _createMarker() {
+    return Marker(
+      markerId: MarkerId("marker_1"),
+      position: coordenada,
+    );
   }
 }
