@@ -11,6 +11,8 @@ class SeleccionarMapar extends StatefulWidget {
   _SeleccionarMaparState createState() => _SeleccionarMaparState();
 }
 
+LatLng coordenada = LatLng(37.379647, -6.0069196);
+
 class _SeleccionarMaparState extends State<SeleccionarMapar> {
   final _initialCameraPosition =
       CameraPosition(target: LatLng(37.379647, -6.0069196), zoom: 15);
@@ -31,17 +33,28 @@ class _SeleccionarMaparState extends State<SeleccionarMapar> {
               Center(
                 child: GoogleMap(
                   initialCameraPosition: _initialCameraPosition,
+                  markers: <Marker> {
+                    _createMarker(),
+                  },
                   onTap: (LatLng position) async {
                   SharedPreferences prefs = await SharedPreferences.getInstance();
                   prefs.setDouble('lat', position.latitude);
                   prefs.setDouble('lng', position.longitude);
                   setState(() {
-                    //coordenadas = position;
+                    coordenada=position;
                   });
                     print(position);
                   },
                 ),
               )
             ])));
+  }
+   Marker _createMarker() {
+   
+      return Marker(
+        markerId: MarkerId("marker_1"),
+        position: coordenada,
+      );
+    
   }
 }

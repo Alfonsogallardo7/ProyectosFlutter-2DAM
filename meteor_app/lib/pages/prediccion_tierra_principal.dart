@@ -210,7 +210,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
 
   Future<ElTiempoResponse> fetchTiempo() async {
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/weather?q=Triana&appid=${ApiId}&units=metric&lang=es'));
+        'https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${ApiId}&units=metric&lang=es'));
     if (response.statusCode == 200) {
       return ElTiempoResponse.fromJson(jsonDecode(response.body));
     } else {
@@ -253,7 +253,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
     lat = prefs.getDouble('lat');
       lng = prefs.getDouble('lng');
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}lon=${lng}&exclude=minutely,daily&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric'));
+        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,daily&appid=${ApiId}&units=metric'));
     if (response.statusCode == 200) {
       return PorHorasResponse.fromJson(jsonDecode(response.body)).hourly;
     } else {
@@ -315,7 +315,7 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
 
   Future<List<Daily>> fetchPorSieteDias() async {
     final response = await http.get(Uri.parse(
-        'https://api.openweathermap.org/data/2.5/onecall?lat=37.3826&lon=-5.99629&exclude=minutely,current,hourly,alerts&appid=f597bdebe1ce3e95e4597d0e583b2a32&units=metric&lang=es'));
+        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,current,hourly,alerts&appid=${ApiId}&units=metric&lang=es'));
     if (response.statusCode == 200) {
       return ElTiempoSieteDaysResponse.fromJson(jsonDecode(response.body))
           .daily;
