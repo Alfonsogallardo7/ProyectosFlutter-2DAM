@@ -108,7 +108,7 @@ class _ElTiempoDetailsState extends State<ElTiempoDetails> {
                     padding: const EdgeInsets.only(top: 50.0, left: 75),
                     child: Column(
                       children: [
-                        Text(elTiempoResponse.name,
+                        Text(elTiempoResponse.name!,
                             style: MeteorAppStyle.styloCiudad),
                         Text(
                             '${elTiempoResponse.main.temp.toInt().toString()}º | ${elTiempoResponse.weather.first.description}',

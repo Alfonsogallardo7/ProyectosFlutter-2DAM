@@ -16,7 +16,7 @@ class ElTiempoResponse {
   });
   late final Coord coord;
   late final List<Weather> weather;
-  late final String base;
+  late final String? base;
   late final Main main;
   late final dynamic visibility;
   late final Wind wind;
@@ -25,7 +25,7 @@ class ElTiempoResponse {
   late final Sys sys;
   late final dynamic timezone;
   late final dynamic id;
-  late final String name;
+  late final String? name;
   late final dynamic cod;
   
   ElTiempoResponse.fromJson(Map<String, dynamic> json){
@@ -92,9 +92,9 @@ class Weather {
     required this.icon,
   });
   late final dynamic id;
-  late final String main;
-  late final String description;
-  late final String icon;
+  late final String? main;
+  late final String? description;
+  late final String? icon;
   
   Weather.fromJson(Map<String, dynamic> json){
     id = json['id'];
@@ -198,7 +198,7 @@ class Sys {
   });
   late final dynamic type;
   late final dynamic id;
-  late final String country;
+  late final String? country;
   late final dynamic sunrise;
   late final dynamic sunset;
   

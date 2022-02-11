@@ -9,7 +9,7 @@ class PorHorasResponse {
   });
   late final dynamic lat;
   late final dynamic lon;
-  late final String timezone;
+  late final String? timezone;
   late final dynamic timezoneOffset;
   late final Current current;
   late final List<Hourly> hourly;
@@ -116,9 +116,9 @@ class Weather {
     required this.icon,
   });
   late final dynamic id;
-  late final String main;
-  late final String description;
-  late final String icon;
+  late final String? main;
+  late final String? description;
+  late final String? icon;
   
   Weather.fromJson(Map<String, dynamic> json){
     id = json['id'];

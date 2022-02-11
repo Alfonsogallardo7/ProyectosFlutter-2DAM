@@ -227,10 +227,10 @@ class _PrediccionTierraPrincipalState extends State<PrediccionTierraPrincipal> {
       child: Container(
         child: Column(
           children: <Widget>[
-            Text(elTiempoResponse.name, style: MeteorAppStyle.styloCiudad),
+            Text(elTiempoResponse.name!, style: MeteorAppStyle.styloCiudad),
             Text('${elTiempoResponse.main.temp.toInt().toString()}º',
                 style: MeteorAppStyle.styloTemp),
-            Text(elTiempoResponse.weather.first.description,
+            Text(elTiempoResponse.weather.first.description!.toString(),
                 style: MeteorAppStyle.styloDescripcion),
             Padding(
               padding: const EdgeInsets.only(top: 3.0),
