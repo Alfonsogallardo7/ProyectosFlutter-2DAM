@@ -9,12 +9,14 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       margin: const EdgeInsets.only(top: 20),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Expanded(
-          flex: 1,
-          child: Image.asset(
-            'assets/images/logo_miarmapp.png',
-            width: 100,
-          ),
-        ),
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.only(left:10.0),
+              child: Text(
+                'MiarmaApp',
+                style: TextStyle(fontSize: 25, fontFamily: 'Billabong', fontWeight: FontWeight.w500),
+              ),
+            )),
         Expanded(
             flex: 1,
             child: Row(

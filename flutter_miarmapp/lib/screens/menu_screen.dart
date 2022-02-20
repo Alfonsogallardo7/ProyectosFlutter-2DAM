@@ -17,7 +17,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static const List<Widget> pages = <Widget>[
     HomeScreen(),
     SearchScreen(),
     ProfileScreen(),
@@ -32,27 +32,73 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          /*BottomNavigationBarItem(
-            icon: Image.asset('assets/images/avatar.jpeg'),
-            label: 'My profile',
-          ),*/
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
+      body: Container(
+          margin: MediaQuery.of(context).padding,
+          child: pages[_selectedIndex]), bottomNavigationBar: _buildBottomBar()
     );
+  }
+
+  Widget _buildBottomBar() {
+    return Container(
+        decoration: const BoxDecoration(
+            border: Border(
+          top: BorderSide(
+            color: Color(0xfff1f1f1),
+            width: 1.0,
+          ),
+        )),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        height: 70,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              child: Icon(Icons.home,
+                  color: _selectedIndex == 0
+                      ? Colors.black
+                      : const Color(0xff999999)),
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 0;
+                });
+              },
+            ),
+            GestureDetector(
+              child: Icon(Icons.search,
+                  color: _selectedIndex == 1
+                      ? Colors.black
+                      : const Color(0xff999999)),
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 1;
+                });
+              },
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedIndex = 2;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                        color: _selectedIndex == 2
+                            ? Colors.black
+                            : Colors.transparent,
+                        width: 1)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    'assets/images/avatar.jpeg',
+                    height: 30,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }

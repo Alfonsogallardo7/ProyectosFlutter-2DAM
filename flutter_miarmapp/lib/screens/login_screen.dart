@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_miarmapp/screens/menu_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -90,19 +91,25 @@ class _LoginScreenState extends State<LoginScreen> {
               borderRadius: BorderRadius.circular(5.0),
               color: Colors.blue,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                Text(
-                  'Entrar',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Helvetica',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 15),
-                ),
-              ],
+            child: InkWell(
+              onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuScreen())
+                    );
+                  },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  Text(
+                    'Entrar',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Helvetica',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15),
+                  ),
+                ],
+              ),
             ),
           ),
           Container(
@@ -112,9 +119,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget> [
-                  const Text('¿Has olvidado tus datos de inicio de sesión?',
+                  const Text('¿Todavía no te has registrado?',
                       style: TextStyle(fontSize: 13)),
-                  const Text('Obtén ayuda',
+                  const Text('Registrarme',
                       style: TextStyle(fontSize: 13)),
                 ],
               )),
