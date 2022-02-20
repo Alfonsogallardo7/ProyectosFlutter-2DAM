@@ -182,13 +182,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         children: [
                           TextSpan(
-                            text: 'alfonsoo_gallardo',
+                            text: 'miguelcamposdev',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           TextSpan(
-                            text: "Miguel apruebame flutter",
+                            text: " Aqui aprobando a mi alumno Alfonso Gallardo un crack, y esta muy fuerte",
                           ),
                         ]),
                   ),
@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         .format(widget.snap['datePublished'].toDate())*/
                         '2021/30/06',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 12,
                       color: secondaryColor,
                     ),
                   ),
