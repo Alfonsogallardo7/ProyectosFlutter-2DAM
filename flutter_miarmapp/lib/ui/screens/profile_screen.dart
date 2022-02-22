@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_miarmapp/screens/login_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);

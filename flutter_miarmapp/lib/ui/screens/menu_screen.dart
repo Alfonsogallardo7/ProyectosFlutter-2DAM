@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_miarmapp/screens/home_screen.dart';
-import 'package:flutter_miarmapp/screens/profile_screen.dart';
-import 'package:flutter_miarmapp/screens/search_screen.dart';
-import 'package:flutter_miarmapp/widgets/home_app_bar.dart';
+import 'package:flutter_miarmapp/ui/screens/home_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/profile_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/search_screen.dart';
+import 'package:flutter_miarmapp/ui/widgets/home_app_bar.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({ Key? key }) : super(key: key);

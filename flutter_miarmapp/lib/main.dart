@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_miarmapp/screens/home_screen.dart';
-import 'package:flutter_miarmapp/screens/login_screen.dart';
-import 'package:flutter_miarmapp/screens/menu_screen.dart';
-import 'package:flutter_miarmapp/screens/register_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/home_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/login_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/menu_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/register_screen.dart';
 
 void main() {
   runApp(const MyApp());

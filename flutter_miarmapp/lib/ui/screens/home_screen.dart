@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_miarmapp/utils/color_style.dart';
-import 'package:flutter_miarmapp/widgets/home_app_bar.dart';
-import 'package:flutter_miarmapp/widgets/like_animations.dart';
+import 'package:flutter_miarmapp/ui/widgets/home_app_bar.dart';
+import 'package:flutter_miarmapp/ui/widgets/like_animations.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {

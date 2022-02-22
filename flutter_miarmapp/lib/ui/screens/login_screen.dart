@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_miarmapp/screens/menu_screen.dart';
+import 'package:flutter_miarmapp/ui/screens/menu_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
