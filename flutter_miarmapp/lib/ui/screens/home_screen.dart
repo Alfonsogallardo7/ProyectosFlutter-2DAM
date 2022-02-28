@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_miarmapp/bloc/posts_bloc.dart';
-import 'package:flutter_miarmapp/bloc/posts_event.dart';
-import 'package:flutter_miarmapp/bloc/posts_state.dart';
+import 'package:flutter_miarmapp/bloc/posts_bloc/posts_bloc.dart';
+import 'package:flutter_miarmapp/bloc/posts_bloc/posts_event.dart';
+import 'package:flutter_miarmapp/bloc/posts_bloc/posts_state.dart';
 import 'package:flutter_miarmapp/models/posts_response.dart';
 import 'package:flutter_miarmapp/repository/constants.dart';
 import 'package:flutter_miarmapp/repository/post_repository/post_repository.dart';
