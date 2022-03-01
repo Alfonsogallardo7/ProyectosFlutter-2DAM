@@ -39,6 +39,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   stream_transform: ^2.0.0
   connectivity_plus: ^2.2.1
+  shared_preferences: ^2.0.13
 
 
 

@@ -4,9 +4,11 @@ import 'package:flutter_miarmapp/bloc/login_bloc/login_bloc.dart';
 import 'package:flutter_miarmapp/models/login_response.dart';
 import 'package:flutter_miarmapp/repository/auth_repository/auth_repository.dart';
 import 'package:flutter_miarmapp/repository/auth_repository/auth_repository_impl.dart';
+import 'package:flutter_miarmapp/repository/constants.dart';
 import 'package:flutter_miarmapp/ui/screens/home_screen.dart';
 import 'package:flutter_miarmapp/bloc/login_bloc/login_event.dart';
 import 'package:flutter_miarmapp/bloc/login_bloc/login_state.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'menu_screen.dart';
 
@@ -48,9 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
             child: BlocConsumer<LoginBloc, LoginState>(
                 listenWhen: (context, state) {
               return state is LoginSuccessState || state is LoginErrorState;
-            }, listener: (context, state) {
+            }, listener: (context, state) async {
               if (state is LoginSuccessState) {
-                // Shared preferences > guardo el token
+                SharedPreferences preferences = await SharedPreferences.getInstance();
+                preferences.setString (
+                  Constant.token, state.loginResponse.token
+                );
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MenuScreen()),

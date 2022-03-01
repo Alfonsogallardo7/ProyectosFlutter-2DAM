@@ -63,6 +63,7 @@ class Post {
     required this.fichero,
     required this.privacidad,
     required this.usernameUsuario,
+    required this.fotoUsuario,
   });
   late final String id;
   late final String titulo;
@@ -70,6 +71,7 @@ class Post {
   late final String fichero;
   late final String privacidad;
   late final String usernameUsuario;
+  late final String fotoUsuario;
   
   Post.fromJson(Map<String, dynamic> json){
     id = json['id'];
@@ -78,6 +80,7 @@ class Post {
     fichero = json['fichero'];
     privacidad = json['privacidad'];
     usernameUsuario = json['usernameUsuario'];
+    fotoUsuario = json['fotoUsuario'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +91,7 @@ class Post {
     _data['fichero'] = fichero;
     _data['privacidad'] = privacidad;
     _data['usernameUsuario'] = usernameUsuario;
+    _data['fotoUsuario'] = fotoUsuario;
     return _data;
   }
 }

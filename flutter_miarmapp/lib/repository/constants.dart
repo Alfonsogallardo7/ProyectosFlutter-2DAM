@@ -4,5 +4,6 @@ class Constant {
   static String nowPlaying = "now_playing";
   static String topRated = "top_rated";
   static String upcoming = "upcoming";
+  static String token = "";
 
 }

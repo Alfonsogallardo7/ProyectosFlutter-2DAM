@@ -315,7 +315,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 CircleAvatar(
                   radius: 18,
-                  backgroundImage: AssetImage('assets/images/avatar.jpeg'),
+                  backgroundImage: NetworkImage(post.fotoUsuario.replaceAll(
+                  'http://localhost:8080/', 'http://10.0.2.2:8080/')),
                 ),
                 Expanded(
                   child: Padding(
