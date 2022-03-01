@@ -8,6 +8,8 @@ import 'package:flutter_miarmapp/ui/screens/home_screen.dart';
 import 'package:flutter_miarmapp/bloc/login_bloc/login_event.dart';
 import 'package:flutter_miarmapp/bloc/login_bloc/login_state.dart';
 
+import 'menu_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Shared preferences > guardo el token
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const MenuScreen()),
                 );
               } else if (state is LoginErrorState) {
                 _showSnackbar(context, state.message);
