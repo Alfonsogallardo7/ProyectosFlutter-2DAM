@@ -31,10 +31,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) {
+          return LoginBloc(authRepository);
+        },
+        child: _createBody(context));
+  }
+
+  _createBody(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Container(
-            color: const Color(0xff0F7EDD),
             padding: const EdgeInsets.all(20),
             child: BlocConsumer<LoginBloc, LoginState>(
                 listenWhen: (context, state) {
@@ -223,10 +230,10 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: emailController,
               decoration: const InputDecoration(
                   suffixIcon: Icon(Icons.email),
-                  suffixIconColor: Colors.white,
+                  suffixIconColor: Colors.black,
                   hintText: 'Email',
                   focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white))),
+                      borderSide: BorderSide(color: Colors.black))),
               onSaved: (String? value) {
                 // This optional block of code can be used to run
                 // code when the user saves the form.
@@ -275,11 +282,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: Colors.black, width: 2),
                     borderRadius: BorderRadius.circular(50)),
                 child: Text(
                   'Sign In'.toUpperCase(),
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
                 )),
           )
