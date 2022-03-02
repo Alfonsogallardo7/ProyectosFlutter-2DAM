@@ -287,7 +287,6 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (BuildContext context, int index) {
               return _createPostViewItem(context, post[index]);
             },
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
             scrollDirection: Axis.vertical,
             separatorBuilder: (context, index) => const VerticalDivider(
               color: Colors.transparent,
@@ -498,7 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                Container(
+                /*Container(
                   padding: EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     /*DateFormat.yMMMd()
@@ -509,7 +508,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: secondaryColor,
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),
