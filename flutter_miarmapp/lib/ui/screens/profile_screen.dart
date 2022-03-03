@@ -280,17 +280,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         SizedBox(
           height:MediaQuery.of(context).size.height / 2.3,
-          child: ListView.separated(
+          child: GridView.builder( 
+            gridDelegate:   SliverGrid(crossAxisAlignment: 3),
             itemBuilder: (BuildContext context, int index) {
               return _createPublicationsMeViewItem(
                   context, listaPublicaciones[index]);
             },
             scrollDirection: Axis.vertical,
-            separatorBuilder: (context, index) => const VerticalDivider(
-              color: Colors.transparent,
-              width: 6.0,
-            ),
+            padding: const EdgeInsets.only(top:5 , bottom:16),
+            shrinkWrap: true,
             itemCount: listaPublicaciones.length,
+        
           ),
         ),
       ],
