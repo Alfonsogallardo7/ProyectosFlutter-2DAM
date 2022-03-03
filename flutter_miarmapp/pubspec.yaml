@@ -40,6 +40,10 @@ dependencies:
   stream_transform: ^2.0.0
   connectivity_plus: ^2.2.1
   shared_preferences: ^2.0.13
+  image_picker: ^0.8.4+10
+  http_parser: ^4.0.0
+  sign_button: ^2.0.2
+
 
 
 

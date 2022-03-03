@@ -11,4 +11,6 @@ class Constant {
   static String token = "";
   static Image img = '' as Image;
 
+  static const foto_perfil_path = 'avatar_image_path';
+
 }
