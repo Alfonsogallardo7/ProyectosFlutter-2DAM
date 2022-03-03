@@ -281,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         SizedBox(
           height:MediaQuery.of(context).size.height / 2.3,
           child: GridView.builder( 
-            gridDelegate:   SliverGrid(crossAxisAlignment: 3),
+            gridDelegate:   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
             itemBuilder: (BuildContext context, int index) {
               return _createPublicationsMeViewItem(
                   context, listaPublicaciones[index]);
