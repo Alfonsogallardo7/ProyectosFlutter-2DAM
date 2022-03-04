@@ -51,10 +51,10 @@ class AuthRepositoryImpl extends AuthRepository {
     });
 
     var request = http.MultipartRequest('POST', uri)
-      ..files.add(http.MultipartFile.fromString('usuario', body,
+      ..files.add(http.MultipartFile.fromString('nuevoUsuario', body,
           contentType: MediaType('application', 'json')))
-      ..files.add(await http.MultipartFile.fromPath('avatar', image,
-          contentType: MediaType('image', 'jpg')))
+      ..files.add(await http.MultipartFile.fromPath('file', image,
+          contentType: MediaType('multipart', 'form-data')))
       ..headers.addAll(headers);
        final response = await request.send();
 

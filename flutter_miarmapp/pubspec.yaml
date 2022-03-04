@@ -43,6 +43,8 @@ dependencies:
   image_picker: ^0.8.4+10
   http_parser: ^4.0.0
   sign_button: ^2.0.2
+  datetime_picker_formfield: ^2.0.0
+  date_field: ^2.1.3
 
 
 
@@ -78,6 +80,7 @@ flutter:
     - assets/images/logo_miarmapp.png
     - assets/images/avatar.jpeg
     - assets/images/foto_migue.jpg
+    - assets/images/mock-avatar.png
 
   #   - images/a_dot_ham.jpeg
 

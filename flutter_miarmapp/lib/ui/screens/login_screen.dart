@@ -9,6 +9,8 @@ import 'package:flutter_miarmapp/ui/screens/home_screen.dart';
 import 'package:flutter_miarmapp/bloc/login_bloc/login_event.dart';
 import 'package:flutter_miarmapp/bloc/login_bloc/login_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_button/constants.dart';
+import 'package:sign_button/create_button.dart';
 
 import 'menu_screen.dart';
 
@@ -52,10 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
               return state is LoginSuccessState || state is LoginErrorState;
             }, listener: (context, state) async {
               if (state is LoginSuccessState) {
-                SharedPreferences preferences = await SharedPreferences.getInstance();
-                preferences.setString (
-                  Constant.token, state.loginResponse.token
-                );
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                preferences.setString(
+                    Constant.token, state.loginResponse.token);
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MenuScreen()),
@@ -256,13 +258,21 @@ class _LoginScreenState extends State<LoginScreen> {
             margin: const EdgeInsets.only(top: 20),
             child: TextFormField(
               controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  suffixIcon: Icon(Icons.vpn_key),
+              obscureText: _isObscure,
+              decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                        icon: Icon(_isObscure
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        }),
                   suffixIconColor: Colors.white,
                   hintText: 'Password',
                   focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white))),
+                      borderSide: BorderSide(color: Colors.black))),
               onSaved: (String? value) {
                 // This optional block of code can be used to run
                 // code when the user saves the form.
@@ -274,30 +284,63 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                final loginDto = LoginDto(
-                    email: emailController.text,
-                    password: passwordController.text);
-                BlocProvider.of<LoginBloc>(context).add(DoLoginEvent(loginDto));
-              }
-            },
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 2),
-                    borderRadius: BorderRadius.circular(50)),
+          Padding(
+            padding: const EdgeInsets.only(top: 15.0),
+            child: InkWell(
+                      onTap: () => Navigator.pushNamed(context, '/register'),
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const <Widget>[
+                            Text('¿No tiene cuenta? '),
+                            Text(
+                              'Registrarme',
+                              style: const TextStyle(color: Colors.blue),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+          ),
+          /*SignInButton(
+            btnText: 'Entrar con Facebook',
+            buttonType: ButtonType.facebook,
+            onPressed: () {},
+          ),
+          Container(
+                width: 50.0,
+                color: Colors.white,
                 child: Text(
-                  'Sign In'.toUpperCase(),
-                  style: const TextStyle(color: Colors.black),
+                  'O',
                   textAlign: TextAlign.center,
-                )),
-          )
-        ],
+                ),
+              ),*/
+          GestureDetector(
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  final loginDto = LoginDto(
+                      email: emailController.text,
+                      password: passwordController.text);
+                  BlocProvider.of<LoginBloc>(context)
+                      .add(DoLoginEvent(loginDto));
+                }
+              },
+              child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blue.shade400, width: 2),
+                      color: Colors.blue.shade400,
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Text(
+                  'Sign In'.toUpperCase(),
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,))
+          )],
       ),
     );
   }

@@ -1,5 +1,5 @@
-import 'dart:html';
-
+import 'dart:io';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_miarmapp/bloc/image_pick_bloc/image_pick_bloc.dart';
@@ -15,18 +15,18 @@ import 'package:flutter_miarmapp/repository/constants.dart';
 import 'package:flutter_miarmapp/repository/preferences.dart';
 import 'package:flutter_miarmapp/ui/screens/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_button/sign_button.dart';
 
-
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({ Key? key }) : super(key: key);
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   late AuthRepository authRepository;
 
   final _formKey = GlobalKey<FormState>();
@@ -38,17 +38,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController password2Controller = TextEditingController();
   TextEditingController birthdateController = TextEditingController();
   bool isPublic = true;
+  late SharedPreferences _prefs;
+  final format = DateFormat("yyyy-MM-dd");
 
   @override
   void initState() {
     super.initState();
+    init();
     authRepository = AuthRepositoryImpl();
+  }
+
+  void init() async {
+    _prefs = await SharedPreferences.getInstance();
   }
 
   @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -66,6 +74,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   Widget _createBody(BuildContext context) {
     return Container(
       margin: MediaQuery.of(context).padding,
@@ -119,36 +128,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            'MiarmaApp',
-          ),
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Text(
-              'Regístrate para ver las fotos y vídeos de tus amigos',
-              textAlign: TextAlign.center,
+            child: const Text(
+              'MiarmaApp',
+              style: TextStyle(fontFamily: 'Billabong', fontSize: 64),
             ),
-          ),
-          SignInButton(
-            btnText: 'Entrar con Facebook',
-            buttonType: ButtonType.facebook,
-            onPressed: () {},
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Stack(alignment: AlignmentDirectional.center, children: [
-              const Divider(
-                thickness: 1.0,
-              ),
-              Container(
-                width: 50.0,
-                color: Colors.white,
-                child: Text(
-                  'O',
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ]),
           ),
           SizedBox(
             height: 700,
@@ -168,7 +152,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     builder: (context, state) {
                       if (state is ImageSelectedSuccessState) {
-                        print('PATH ${state.pickedFile.path}');
                         return Column(
                           children: [
                             ClipRRect(
@@ -182,8 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                             ElevatedButton(
                                 onPressed: () {
-                                  PreferenceUtils.setString(
-                                      Constant.foto_perfil_path,
+                                  _prefs.setString(Constant.foto_perfil_path,
                                       state.pickedFile.path);
                                 },
                                 child: const Text('Subir imagen'))
@@ -208,7 +190,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: emailController,
                     decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(8.0),
-                        hintText: 'Nick o email',
+                        hintText: 'Email',
                         border: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 5.0))),
@@ -253,7 +235,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: usernameController,
                     decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(8.0),
-                        hintText: 'Nick',
+                        hintText: 'Username',
                         border: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 5.0))),
@@ -294,7 +276,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           : null;
                     },
                   ),
-                  TextFormField(
+                  DateTimeField(
+                    format: format,
+                    onSaved: (DateTime? value) {},
+                    validator: (DateTime? value) {
+                      return (value == null)
+                          ? 'You need to write your birthdate'
+                          : null;
+                    },
                     controller: birthdateController,
                     decoration: const InputDecoration(
                         contentPadding: EdgeInsets.all(8.0),
@@ -302,73 +291,85 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         border: OutlineInputBorder(
                             borderSide:
                                 BorderSide(color: Colors.grey, width: 5.0))),
-                    onSaved: (String? value) {},
-                    validator: (String? value) {
-                      return (value == null || value.isEmpty)
-                          ? 'You need to write your birthdate'
-                          : null;
+                    onShowPicker: (context, currentValue) {
+                      return showDatePicker(
+                          context: context,
+                          firstDate: DateTime(1900),
+                          initialDate: currentValue ?? DateTime.now(),
+                          lastDate: DateTime(2100));
                     },
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top:10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          '¿Ya tienes una cuenta?',
+                          style: TextStyle(fontFamily: 'Helvetica'),
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.pushNamed(context, '/login'),
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 10.0),
+                            child: const Text(
+                              'Inicia sesión',
+                              style: TextStyle(
+                                  color: Colors.blue, fontFamily: 'Helvetica'),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   GestureDetector(
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        final registerDto = RegisterDto(
-                            username: usernameController.text,
-                            email: emailController.text,
-                            nombre: nameController.text,
-                            apellidos: lastNameController.text,
-                            fechaNacimiento: birthdateController.text,
-                            password: passwordController.text,
-                            password2: password2Controller.text);
-                        BlocProvider.of<RegisterBloc>(context).add(
-                            DoRegisterEvent(
-                                registerDto,
-                                PreferenceUtils.getString(
-                                    Constant.foto_perfil_path)!));
-                      }
-                    },
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 50, vertical: 15),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Text(
-                          'Registrarse'.toUpperCase(),
-                          style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        )),
-                  )
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                          final registerDto = RegisterDto(
+                              username: usernameController.text,
+                              email: emailController.text,
+                              nombre: nameController.text,
+                              apellidos: lastNameController.text,
+                              fechaNacimiento: birthdateController.text,
+                              password: passwordController.text,
+                              password2: password2Controller.text);
+                          BlocProvider.of<RegisterBloc>(context).add(
+                              DoRegisterEvent(
+                                  registerDto,
+                                  _prefs
+                                      .getString(Constant.foto_perfil_path)!));
+                        }
+                      },
+                      child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.only(
+                              top: 20, left: 30, right: 30, bottom:20),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 20),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Colors.blue.shade400, width: 2),
+                              color: Colors.blue.shade400,
+                              borderRadius: BorderRadius.circular(50)),
+                          child: Text(
+                            'Register'.toUpperCase(),
+                            style: const TextStyle(color: Colors.white),
+                            textAlign: TextAlign.center,
+                          )))
                 ],
               ),
             ),
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Text(
+            child: const Text(
               'Al registarte, aceptas nuestros Términos, Política de Datos y Política de Cookies.',
+              style: TextStyle(fontFamily: 'Helvetica', color:Colors.grey, fontSize:10),
               textAlign: TextAlign.center,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                '¿Ya tienes una cuenta?',
-              ),
-              InkWell(
-                onTap: () => Navigator.pushNamed(context, '/login'),
-                child: Container(
-                  margin: const EdgeInsets.only(left: 10.0),
-                  child: Text(
-                    'Inicia sesión',
-                  ),
-                ),
-              )
-            ],
-          )
         ],
       ),
-    );}
+    );
+  }
 }
