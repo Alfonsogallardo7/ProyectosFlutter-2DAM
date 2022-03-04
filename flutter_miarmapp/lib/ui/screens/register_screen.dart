@@ -28,7 +28,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   late AuthRepository authRepository;
-
+  bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -248,7 +248,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   TextFormField(
                     controller: passwordController,
-                    decoration: const InputDecoration(
+                    obscureText: _isObscure,
+                    decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                            icon: Icon(_isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure = !_isObscure;
+                              });
+                            }),
                         contentPadding: EdgeInsets.all(8.0),
                         hintText: 'Contraseña',
                         border: OutlineInputBorder(
@@ -263,7 +273,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   TextFormField(
                     controller: password2Controller,
-                    decoration: const InputDecoration(
+                    obscureText: _isObscure,
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        icon: Icon(_isObscure
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        }),
                         contentPadding: EdgeInsets.all(8.0),
                         hintText: 'Repita su contraseña',
                         border: OutlineInputBorder(
@@ -300,7 +320,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top:10.0),
+                    padding: const EdgeInsets.only(top: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -343,7 +363,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       child: Container(
                           width: MediaQuery.of(context).size.width,
                           margin: const EdgeInsets.only(
-                              top: 20, left: 30, right: 30, bottom:20),
+                              top: 20, left: 30, right: 30, bottom: 20),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 20),
                           decoration: BoxDecoration(
@@ -364,7 +384,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             margin: const EdgeInsets.symmetric(vertical: 10.0),
             child: const Text(
               'Al registarte, aceptas nuestros Términos, Política de Datos y Política de Cookies.',
-              style: TextStyle(fontFamily: 'Helvetica', color:Colors.grey, fontSize:10),
+              style: TextStyle(
+                  fontFamily: 'Helvetica', color: Colors.grey, fontSize: 10),
               textAlign: TextAlign.center,
             ),
           ),
