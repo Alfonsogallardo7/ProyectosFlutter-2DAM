@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_miarmapp/ui/screens/new_post_screen.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
@@ -22,9 +23,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(Icons.add_box_outlined),
+                 Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                              onTap: () {Navigator.push(context, MaterialPageRoute(builder: (context) => const NewPostScreen()));},
+                              child: Icon(Icons.add_box_outlined)
+                            ), 
                 ),
                 const Padding(
                   padding: EdgeInsets.all(8.0),

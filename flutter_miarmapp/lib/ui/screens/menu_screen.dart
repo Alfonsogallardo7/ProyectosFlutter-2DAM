@@ -92,7 +92,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image.asset(
-                    'assets/images/avatar.jpeg',
+                    'assets/images/foto_migue.jpg',
                     height: 30,
                   ),
                 ),
